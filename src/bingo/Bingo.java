@@ -52,18 +52,18 @@ public class Bingo {
         võiduSumma = 0;
 
         System.out.println("Sinu bingo.Bingo pilet:");
-        Thread.sleep(1500);
+        Thread.sleep(100);
         pilet.prindiPilet();
 
         List<Integer> loositudArvud = new ArrayList<>();
         LoosiNumber loos = new LoosiNumber(1, 75);
 
-        Thread.sleep(1500);
+        Thread.sleep(100);
         System.out.print("Nurkademängu numbrid: ");
         numbriLoos(loositudArvud, loos, pilet, 40);
-        Thread.sleep(1500);
+        Thread.sleep(100);
         System.out.println("\nHetkeseis:");
-        Thread.sleep(1500);
+        Thread.sleep(100);
         pilet.prindiPilet();
 
         võit = 0;
@@ -71,16 +71,16 @@ public class Bingo {
             võit = 20;
             võiduSumma += võit;
         }
-        Thread.sleep(1500);
+        Thread.sleep(100);
         System.out.println("Nurkademängus võidetud summa: " + võit + "€");
-        Thread.sleep(1500);
+        Thread.sleep(100);
         System.out.println("--------------------------------");
-        Thread.sleep(1500);
+        Thread.sleep(100);
         System.out.print("Diagonaalidemängu numbrid: ");
         numbriLoos(loositudArvud, loos, pilet, 17);
-        Thread.sleep(1500);
+        Thread.sleep(100);
         System.out.println("\nHetkeseis:");
-        Thread.sleep(1500);
+        Thread.sleep(100);
         pilet.prindiPilet();
 
         võit = 0;
@@ -88,16 +88,16 @@ public class Bingo {
             võit = 50;
             võiduSumma += võit;
         }
-        Thread.sleep(1500);
+        Thread.sleep(100);
         System.out.println("Diagonaalidemängus võidetud summa: " + võit + "€");
-        Thread.sleep(1500);
+        Thread.sleep(100);
         System.out.println("--------------------------------");
-        Thread.sleep(1500);
+        Thread.sleep(100);
         System.out.print("Täismängu numbrid: ");
         numbriLoos(loositudArvud, loos, pilet, 15);
-        Thread.sleep(1500);
+        Thread.sleep(100);
         System.out.println("\nLõppseis:");
-        Thread.sleep(1500);
+        Thread.sleep(100);
         pilet.prindiPilet();
 
         võit = 0;
@@ -105,13 +105,13 @@ public class Bingo {
             võit = 150;
             võiduSumma += võit;
         }
-        Thread.sleep(1500);
+        Thread.sleep(100);
         System.out.println("Täismängus võidetud summa: " + võit + "€");
-        Thread.sleep(1500);
+        Thread.sleep(100);
         System.out.println("bingo.Bingo võidusumma: " + võiduSumma + "€");
-        Thread.sleep(1500);
+        Thread.sleep(100);
         System.out.println("--------------------------------");
-        Thread.sleep(1500);
+        Thread.sleep(100);
 
     }
 
@@ -126,7 +126,7 @@ public class Bingo {
                     break;
                 }
             }
-            Thread.sleep(1000);
+            Thread.sleep(100);
             System.out.print(loositud + " ");
             pilet.kontrolli(loositud);
         }

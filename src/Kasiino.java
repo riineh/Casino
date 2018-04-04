@@ -1,4 +1,5 @@
 import bingo.Bingo;
+import blackjack.BlackjackLoogika;
 import slot_machine.Mänguautomaat;
 
 import java.util.Arrays;
@@ -9,7 +10,7 @@ public class Kasiino {
         Scanner sc = new Scanner(System.in); //loon mängude jooksul kasutatava skänneri
         System.out.println("Tere tulemas kasiinosse!");
         Thread.sleep(1000); //sekundiline paus, et kõik laused üksteise otsa ei tuleks
-        
+
         System.out.println("Palun sisesta oma nimi:");
         String nimi = sc.nextLine();
 
@@ -53,6 +54,10 @@ public class Kasiino {
                     mängija.setRaha(mängija.getRaha() + mäng.getLõppSkoor());
                     break;
                 }
+            } else
+            if (valik.equals("blackjack")) {
+                BlackjackLoogika blackjack = new BlackjackLoogika(mängija.getNimi(), mängija.getRaha());
+                blackjack.alustaMängu();
             }
 
             //kasiinost lahkumise osa
@@ -66,7 +71,7 @@ public class Kasiino {
             else if (vastus2.equals("ei")){ //ei korral algab kasiino tsükkel uuesti ning mängija saab valida mängu
                 continue;
             }
-        }
+     }
         sc.close(); //sulgeb skänneri
     }
 }
