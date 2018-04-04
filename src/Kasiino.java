@@ -54,8 +54,7 @@ public class Kasiino {
                     mängija.setRaha(mängija.getRaha() + mäng.getLõppSkoor());
                     break;
                 }
-            } else
-            if (valik.equals("blackjack")) {
+            } else if (valik.equals("blackjack")) {
                 BlackjackLoogika blackjack = new BlackjackLoogika(mängija.getNimi(), mängija.getRaha());
                 blackjack.alustaMängu();
             }
