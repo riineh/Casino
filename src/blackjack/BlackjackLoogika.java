@@ -95,7 +95,7 @@ public class BlackjackLoogika {
             System.out.println("Diiler võitis");
         } else {
             boolean mängijaVõitis = mängija.getMaxLegaalneKaartidePunktid() > diiler.getMaxLegaalneKaartidePunktid();
-            if (mängijaVõitis) {
+            if (mängijaVõitis || diiler.onLõhki()) {
                 System.out.println("Võitsid!!!");
             } else {
                 System.out.println("Kaotasid");
