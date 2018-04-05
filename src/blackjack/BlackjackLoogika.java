@@ -23,7 +23,7 @@ public class BlackjackLoogika {
         System.out.println("1. Diiler jagab nii endale kui ka sinule (mängijale) kaks kaarti");
         System.out.println("2. Diileri kaartidest on näha alguses vaid ühte");
         System.out.println("3. Sina (Mängija) saad otsustada, kas võtta kaarte juurde (Hit) või olla rahul (Stand)");
-        System.out.println("4. Kui läksid juurde võtsmisega lõhki (>21), on diiler võitud. Kui said 21, oled sina võitnud. Kui nii sina kui diiler saite 21, on viik.");
+        System.out.println("4. Kui läksid juurde võtmisega lõhki (>21), on diiler võitud. Kui said 21, oled sina võitnud. Kui nii sina kui diiler saite 21, on viik.");
         System.out.println("5. Vastasel juhul vaadatakse peale stand'imist diileri teist kaarti");
         System.out.println("6. Kui diileri kaartide summa on suurem või võrdne 17ga, siis diiler kaarte juurde ei tohi võtta");
         System.out.println("7. Vastasel juhul peab diiler juurde võtma");

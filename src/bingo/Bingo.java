@@ -22,9 +22,9 @@ public class Bingo {
         System.out.println("Tere tulemast!");
         System.out.println("bingo.Bingo koosneb kolmest osast: nurkademängust (võidusumaa: 20€), " +
                 "diagonaalidemängust (võidusumma: 50€) ja täismängust (võidusumma (150€).\n" +
-                "Nurkademängus loositakse 33 numbrit. Võitmiseks, tuleb saada täis kõik 4 nurka.\n" +
-                "Diagonaalidemängus loositakse veel 5 numbrit. Selle vooru võitmiseks tuleb saada täis mõlemad diagonaalid.\n" +
-                "Täismängus loositkse viimased 10 numbrit. Võitmiseks tuleb saada täis kõik mänguvälja ruudud.\n" +
+                "Nurkademängus loositakse 40 numbrit. Võitmiseks, tuleb saada täis kõik 4 nurka.\n" +
+                "Diagonaalidemängus loositakse veel 17 numbrit. Selle vooru võitmiseks tuleb saada täis mõlemad diagonaalid.\n" +
+                "Täismängus loositkse viimased 15 numbrit. Võitmiseks tuleb saada täis kõik mänguvälja ruudud.\n" +
                 "P.S Täidetud ruutu tähistab sümbol \"0\"");
         System.out.println("---------------------");
         System.out.println("bingo.Bingo pileti hind 10€");
