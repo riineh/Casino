@@ -25,14 +25,14 @@ import javafx.scene.canvas.*;
 import java.awt.*;
 import java.io.*;
 
-public class KasiinoMäng extends Application {
+public class KasiinoMängGUI extends Application {
     private String logoPath = "file:casinoLogo.jpg";
     private Font megrim = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),50);
 
     private int kõrgus = 700;
     private int laius = 1200;
 
-    public KasiinoMäng() throws FileNotFoundException {
+    public KasiinoMängGUI() throws FileNotFoundException {
     }
 
     public static void main(String[] args) {
