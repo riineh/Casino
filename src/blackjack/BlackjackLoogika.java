@@ -63,7 +63,8 @@ public class BlackjackLoogika {
             if (tegevus.toLowerCase().equals("hit") || tegevus.toLowerCase().equals("1")) {
                 diiler.jagaJärgmineKaartMängijale(mängija);
                 System.out.println(laud.getMängija().getKäsiTekstina(false));
-            } else {
+            } else if (tegevus.toLowerCase().equals("stand")){
+                mängija.stand();
                 break;
             }
         }

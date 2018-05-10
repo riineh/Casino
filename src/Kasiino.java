@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 public class Kasiino {
     public static void main(String[] args) throws InterruptedException {
+        boolean onPiisavVanus = true;
+
         Scanner sc = new Scanner(System.in); //loon mängude jooksul kasutatava skänneri
         System.out.println("Tere tulemas kasiinosse!");
         Thread.sleep(1000); //sekundiline paus, et kõik laused üksteise otsa ei tuleks
@@ -15,14 +17,26 @@ public class Kasiino {
         String nimi = sc.nextLine();
 
         System.out.println("Palun sisesta oma vanus:");
-        String sõnaVanus = sc.nextLine();
+
+        while (!sc.hasNextInt()) {
+            System.out.println("Vanus peab olema täisarv. Palun sisesta oma vanus:");
+            sc.next();
+        }
+        String sõnaVanus = sc.next();
         int vanus = Integer.parseInt(sõnaVanus);
+
+        if (vanus < 21) {
+            onPiisavVanus = false;
+            System.out.println("Kahjuks oled kasiino külastamiseks veel liiga noor. Vanusepiirang on 21.");
+            sc.close();
+
+        }
 
         //Eelnevalt küsitud mängija andmete põhjal loob uue mängija
         Mängija mängija = new Mängija(nimi, vanus);
         mängija.setRaha(200); //mängija alustab kindla rahasummaga
 
-        while (true) { //kasiino tsükkel (siin saab mängija valida, mis mängu soovib)
+        while (onPiisavVanus) { //kasiino tsükkel (siin saab mängija valida, mis mängu soovib)
             ValikVastusegaKüsimus küsimus = new ValikVastusegaKüsimus(mängija.getNimi()+", palun vali mäng:",
                     Arrays.asList("blackjack", "bingo", "slot machine"));    //loon valikvastusega küsimuse
             System.out.println("Kontoseis: " + mängija.getRaha());   //näitab mängija kontoseisu
