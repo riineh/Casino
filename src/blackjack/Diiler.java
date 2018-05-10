@@ -2,7 +2,7 @@ package blackjack;
 
 import java.util.ArrayList;
 
-//TRALAL OLEN COMMIT
+
 public class Diiler extends Mängija {
     private Kaardipakk kaardipakk;
     private Laud laud;

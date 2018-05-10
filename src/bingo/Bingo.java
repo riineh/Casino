@@ -1,5 +1,5 @@
 package bingo;
-//kommentaar
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -53,7 +53,9 @@ public class Bingo {
         int aeg = 1000;
 
         System.out.println("Sinu Bingo pilet:");
+
         Thread.sleep(aeg);
+
         pilet.prindiPilet();
 
         List<Integer> loositudArvud = new ArrayList<>();
