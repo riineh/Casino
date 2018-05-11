@@ -13,14 +13,15 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-
+import javafx.scene.control.TextField;
 import java.io.*;
 
 public class KasiinoMängGUI extends Application {
     private String logoPath = "file:casinoLogo.jpg";
     private String logoPath2 = "file:casinoLogoIlma.jpg";
-    private Font megrimSuur = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),50);
-    private Font megrimVäike = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),35);
+    private Font megrim50 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),50);
+    private Font megrim35 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),35);
+    private Font megrim22 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),22);
 
     private int kõrgus = 700;
     private int laius = 1200;
@@ -74,7 +75,7 @@ public class KasiinoMängGUI extends Application {
         Text text = new Text();
         text.setFill(Color.WHITE);
         text.setText("Exit");
-        text.setFont(megrimSuur);
+        text.setFont(megrim50);
 
         pane.getChildren().addAll(rect, text);
         pane.setOpacity(0.8);
@@ -107,7 +108,7 @@ public class KasiinoMängGUI extends Application {
         Text text = new Text();
         text.setFill(Color.WHITE);
         text.setText("Play");
-        text.setFont(megrimSuur);
+        text.setFont(megrim50);
 
         pane.getChildren().addAll(rect, text);
         pane.setOpacity(0.8);
@@ -127,10 +128,18 @@ public class KasiinoMängGUI extends Application {
         Text text = new Text();
         text.setFill(Color.WHITE);
         text.setText("Tere tulemast\nkasiinosse U of T!\n\nPalun sisesta enda andmed:\n\n\n\n");
-        text.setFont(megrimVäike);
+        text.setFont(megrim35);
         text.setTextAlignment(TextAlignment.CENTER);
 
         pane.setOpacity(0.95);
+
+        /*
+        TextField tf = new TextField();
+        tf.setText("Nimi");
+        tf.setFont(megrim22);
+        tf.setMaxWidth(200);
+        tf.setOpacity(0.7);
+        */
 
         pane.getChildren().addAll(ring, text);
         return pane;
