@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+//test
+
 public interface Loos {
     List<String> sümbolid = Arrays.asList("KIRSS", "PLOOM", "SIDRUN", "APELSIN", "BANAAN", "MAASIKAS");
 
