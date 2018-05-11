@@ -1,33 +1,26 @@
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.effect.Reflection;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.FontWeight;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.canvas.*;
 
-import java.awt.*;
 import java.io.*;
 
 public class KasiinoMängGUI extends Application {
     private String logoPath = "file:casinoLogo.jpg";
-    private Font megrim = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),50);
+    private String logoPath2 = "file:casinoLogoIlma.jpg";
+    private Font megrimSuur = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),50);
+    private Font megrimVäike = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),35);
 
     private int kõrgus = 700;
     private int laius = 1200;
@@ -42,21 +35,10 @@ public class KasiinoMängGUI extends Application {
     @Override
     public void start(Stage stage) {
         Group juur = new Group();
-        StackPane stackPane = new StackPane();
+        Scene stseen = new Scene(juur, laius, kõrgus);
 
-        //tekitan logost pildi ja et seda näidata saaks ka ImageView
-        Image logo = new Image(logoPath);
-        ImageView iv = new ImageView(logo);
-        //määran pildi suuruse soovitud laiuseks ja kõrguseks
-        iv.setFitWidth(laius);
-        iv.setFitHeight(kõrgus);
-        stackPane.getChildren().add(iv);
-
-        //Selleks, et ekraani muutes tuleks pilt kaasa
-        stackPane.heightProperty().addListener((observable, oldValue, newValue) -> {iv.setFitHeight((double) newValue);});
-        stackPane.widthProperty().addListener((observable, oldValue, newValue) -> {iv.setFitWidth((double) newValue);});
-
-        juur.getChildren().add(stackPane);
+        ImageView iv = looTaust(logoPath, stseen);
+        juur.getChildren().add(iv);
 
         //exit nupp
         Pane exitNupp = getExitNupp();
@@ -70,10 +52,17 @@ public class KasiinoMängGUI extends Application {
         playNupp.setLayoutY(150);
         juur.getChildren().add(playNupp);
 
-        Scene stseen = new Scene(juur, laius, kõrgus);
         stage.setScene(stseen);
         stage.setTitle("Casino");
         stage.show();
+
+        Pane ring = küsiAnmded();
+        ring.setLayoutX(stseen.getWidth()/2-laius/4);
+        ring.setLayoutY(stseen.getHeight()/2-laius/4);
+
+        playNupp.setOnMouseClicked(event -> {juur.getChildren().clear();
+        ImageView iv2 = looTaust(logoPath2, stseen);
+        juur.getChildren().addAll(iv2, ring, exitNupp);});
     }
 
     private Pane getExitNupp(){
@@ -85,15 +74,28 @@ public class KasiinoMängGUI extends Application {
         Text text = new Text();
         text.setFill(Color.WHITE);
         text.setText("Exit");
-        text.setFont(megrim);
+        text.setFont(megrimSuur);
 
         pane.getChildren().addAll(rect, text);
+        pane.setOpacity(0.8);
 
         pane.setOnMouseEntered(event -> rect.setFill(Color.rgb(53, 69, 73)));
         pane.setOnMouseExited(event -> rect.setFill(Color.rgb(45, 65, 70)));
         pane.setOnMouseClicked(event -> Platform.exit());
 
         return pane;
+    }
+
+    private ImageView looTaust(String logoP, Scene stseen) {
+        Image logo = new Image(logoP);
+        ImageView iv = new ImageView(logo);
+        //määran pildi suuruse soovitud laiuseks ja kõrguseks
+        iv.setFitWidth(stseen.getWidth());
+        iv.setFitHeight(stseen.getHeight());
+
+        iv.fitWidthProperty().bind(stseen.widthProperty());
+        iv.fitHeightProperty().bind(stseen.heightProperty());
+        return iv;
     }
 
     private Pane getPlayNupp() {
@@ -105,13 +107,32 @@ public class KasiinoMängGUI extends Application {
         Text text = new Text();
         text.setFill(Color.WHITE);
         text.setText("Play");
-        text.setFont(megrim);
+        text.setFont(megrimSuur);
 
         pane.getChildren().addAll(rect, text);
+        pane.setOpacity(0.8);
 
         pane.setOnMouseEntered(event -> rect.setFill(Color.rgb(53, 69, 73)));
         pane.setOnMouseExited(event -> rect.setFill(Color.rgb(45, 65, 70)));
 
+        return pane;
+    }
+
+    private Pane küsiAnmded() {
+        Pane pane = new StackPane();
+        Circle ring = new Circle();
+        ring.setFill(Color.rgb(45, 65, 70));
+        ring.setRadius(laius/4);
+
+        Text text = new Text();
+        text.setFill(Color.WHITE);
+        text.setText("Tere tulemast\nkasiinosse U of T!\n\nPalun sisesta enda andmed:\n\n\n\n");
+        text.setFont(megrimVäike);
+        text.setTextAlignment(TextAlignment.CENTER);
+
+        pane.setOpacity(0.95);
+
+        pane.getChildren().addAll(ring, text);
         return pane;
     }
 }

@@ -1,7 +1,10 @@
 package bingo;
 
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -21,6 +24,5 @@ public class BingoMäng extends Application {
 
     @Override
     public void start(Stage stage) {
-        
     }
 }

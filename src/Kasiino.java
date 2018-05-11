@@ -48,7 +48,7 @@ public class Kasiino {
                     Bingo mäng = new Bingo();    //loob uue bingo mängu
                     mäng.mängi(sc);    //bingo mäng hakkab tööle
                     mängija.setRaha(mängija.getRaha() + mäng.getVõiduSumma());   //pärast mängu kantakse võidusumma mängija kontole
-                    if (mäng.getLahku() == true){    //kui mängija valib enne bingo ostmist,
+                    if (mäng.getLahku()){    //kui mängija valib enne bingo ostmist,
                         break;                       //et soovib lahkuda, siis süsteem ei küsi kas ta soovib uuesti mängida
                     }
                     ValikVastusegaKüsimus küsimus1 = new ValikVastusegaKüsimus("Kas soovid uuesti mängida?",
@@ -84,7 +84,7 @@ public class Kasiino {
             else if (vastus2.equals("ei")){ //ei korral algab kasiino tsükkel uuesti ning mängija saab valida mängu
                 continue;
             }
-     }
+        }
         sc.close(); //sulgeb skänneri
     }
 }
