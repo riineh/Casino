@@ -19,6 +19,10 @@ import java.io.*;
 public class KasiinoMängGUI extends Application {
     private String logoPath = "file:casinoLogo.jpg";
     private String logoPath2 = "file:casinoLogoIlma.jpg";
+    private String bingoLogo = "file:bingo.jpg";
+    private String blacjackLogo = "file:blackjack.jpg";
+    private String slotMachineLogo = "file:slotMachine2.jpg";
+
     private Font megrim50 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),50);
     private Font megrim35 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),35);
     private Font megrim22 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),22);
@@ -41,50 +45,87 @@ public class KasiinoMängGUI extends Application {
         ImageView iv = looTaust(logoPath, stseen);
         juur.getChildren().add(iv);
 
-        //exit nupp
-        Pane exitNupp = getExitNupp();
-        exitNupp.setLayoutX(laius-200);
-        exitNupp.setLayoutY(50);
-        juur.getChildren().add(exitNupp);
-
-        //play nupp
-        Pane playNupp = getPlayNupp();
-        playNupp.setLayoutX(laius-200);
-        playNupp.setLayoutY(150);
-        juur.getChildren().add(playNupp);
+        ImageView iv2 = looTaust(logoPath2, stseen);  //siis tekitab uue tausta ilma casino logota
 
         stage.setScene(stseen);
         stage.setTitle("Casino");
         stage.show();
 
-        Pane ring = küsiAnmded();
+        //exit nupp
+        Pane exitNupp = getSuurNupp("Exit");
+        exitNupp.setLayoutX(laius-200);
+        exitNupp.setLayoutY(50);
+        exitNupp.setOnMouseClicked(event -> Platform.exit());
+        juur.getChildren().add(exitNupp);
+
+        //play nupp
+        Pane playNupp = getSuurNupp("Play");
+        playNupp.setLayoutX(laius-200);
+        playNupp.setLayoutY(150);
+        juur.getChildren().add(playNupp);
+
+        //küsi andmed ring
+        Pane ring = getAndmedKüsida();
         ring.setLayoutX(stseen.getWidth()/2-laius/4);
         ring.setLayoutY(stseen.getHeight()/2-laius/4);
 
-        playNupp.setOnMouseClicked(event -> {juur.getChildren().clear();
-        ImageView iv2 = looTaust(logoPath2, stseen);
-        juur.getChildren().addAll(iv2, ring, exitNupp);});
-    }
+        //nime lahter
+        Pane  nimeTextField = new StackPane();
+        TextField tf1 = getTextField("Nimi");
+        nimeTextField.getChildren().add(tf1);
+        nimeTextField.setLayoutX(stseen.getWidth()/2-(225/2));
+        nimeTextField.setLayoutY(stseen.getHeight()/2 + 35);
 
-    private Pane getExitNupp(){
-        Pane pane = new StackPane();
-        Rectangle rect = new Rectangle(150, 70);
-        rect.setFill(Color.rgb(45, 65, 70));
-        rect.setStroke(Color.WHITE);
+        //vanuse lahter (vanuse kontrolli ei oska hetkel lisada veel)
+        Pane  vanuseTextField = new StackPane();
+        TextField tf2 = getTextField("Vanus");
+        vanuseTextField.getChildren().add(tf2);
+        vanuseTextField.setLayoutX(stseen.getWidth()/2-(225/2));
+        vanuseTextField.setLayoutY(stseen.getHeight()/2 + 100);
 
-        Text text = new Text();
-        text.setFill(Color.WHITE);
-        text.setText("Exit");
-        text.setFont(megrim50);
+        stseen.setOnMouseClicked(event -> {
+            if (tf1.getText().equals("")){
+                tf1.setText("Nimi");
+            }
+            if (tf2.getText().equals("")){
+                tf2.setText("Vanus");
+            }
+        });
 
-        pane.getChildren().addAll(rect, text);
-        pane.setOpacity(0.8);
+        //next nupp
+        Pane nextNupp = getVäikeNupp("Next");
+        nextNupp.setLayoutX((stseen.getWidth()/2)-(115/2));
+        nextNupp.setLayoutY(stseen.getHeight()/2 + 175);
 
-        pane.setOnMouseEntered(event -> rect.setFill(Color.rgb(53, 69, 73)));
-        pane.setOnMouseExited(event -> rect.setFill(Color.rgb(45, 65, 70)));
-        pane.setOnMouseClicked(event -> Platform.exit());
+        //back nupp
+        Pane backNupp = getSuurNupp("Back");
+        backNupp.setLayoutX(50);
+        backNupp.setLayoutY(50);
 
-        return pane;
+        //bingo alusta mängu
+        Pane bingoNupp = getMänguLogo(bingoLogo, "Bingo");
+        bingoNupp.setLayoutX(stseen.getWidth()/6);
+        bingoNupp.setLayoutY(stseen.getHeight()/2-100);
+
+        //blackjack alusta mängu
+        Pane blackjackNupp = getMänguLogo(blacjackLogo, "Black-\njack");
+        blackjackNupp.setLayoutX((stseen.getWidth()/6)+300);
+        blackjackNupp.setLayoutY(stseen.getHeight()/2-100);
+
+        //slot mmachine alusta mängu
+        Pane slotmachineNupp = getMänguLogo(slotMachineLogo, "Slot\nMachine");
+        slotmachineNupp.setLayoutX((stseen.getWidth()/6)+600);
+        slotmachineNupp.setLayoutY(stseen.getHeight()/2-100);
+
+        playNupp.setOnMouseClicked(event -> {juur.getChildren().clear(); //kui play nuppu vajutada, tühjendab juure
+            juur.getChildren().addAll(iv2, ring, exitNupp, nimeTextField, vanuseTextField, nextNupp);
+            nextNupp.setOnMouseClicked(event1 -> {juur.getChildren().clear();
+                juur.getChildren().addAll(iv2, bingoNupp, blackjackNupp, slotmachineNupp, exitNupp, backNupp);
+                backNupp.setOnMouseClicked(event2 -> {juur.getChildren().clear();
+                    juur.getChildren().addAll(iv2, ring, exitNupp, nimeTextField, vanuseTextField, nextNupp);
+                });
+            });
+        });
     }
 
     private ImageView looTaust(String logoP, Scene stseen) {
@@ -99,7 +140,27 @@ public class KasiinoMängGUI extends Application {
         return iv;
     }
 
-    private Pane getPlayNupp() {
+    private Pane getVäikeNupp(String tekst){
+        Pane pane = new StackPane();
+        Rectangle rect = new Rectangle(115, 50);
+        rect.setFill(Color.rgb(45, 65, 70));
+        rect.setStroke(Color.WHITE);
+
+        Text text = new Text();
+        text.setFill(Color.WHITE);
+        text.setText(tekst);
+        text.setFont(megrim35);
+
+        pane.getChildren().addAll(rect, text);
+        pane.setOpacity(0.8);
+
+        pane.setOnMouseEntered(event -> rect.setFill(Color.rgb(53, 69, 73)));
+        pane.setOnMouseExited(event -> rect.setFill(Color.rgb(45, 65, 70)));
+
+        return pane;
+    }
+
+    private Pane getSuurNupp(String tekst){
         Pane pane = new StackPane();
         Rectangle rect = new Rectangle(150, 70);
         rect.setFill(Color.rgb(45, 65, 70));
@@ -107,7 +168,7 @@ public class KasiinoMängGUI extends Application {
 
         Text text = new Text();
         text.setFill(Color.WHITE);
-        text.setText("Play");
+        text.setText(tekst);
         text.setFont(megrim50);
 
         pane.getChildren().addAll(rect, text);
@@ -119,7 +180,18 @@ public class KasiinoMängGUI extends Application {
         return pane;
     }
 
-    private Pane küsiAnmded() {
+    private TextField getTextField(String sisu){
+        TextField tf = new TextField();
+        tf.setText(sisu);
+        tf.setFont(megrim22);
+        tf.setMaxWidth(225);
+        tf.setOpacity(0.7);
+        tf.setOnMouseClicked(event -> tf.deleteText(0, tf.getText().length()));
+
+        return tf;
+    }
+
+    private Pane getAndmedKüsida() {
         Pane pane = new StackPane();
         Circle ring = new Circle();
         ring.setFill(Color.rgb(45, 65, 70));
@@ -133,15 +205,33 @@ public class KasiinoMängGUI extends Application {
 
         pane.setOpacity(0.95);
 
-        /*
-        TextField tf = new TextField();
-        tf.setText("Nimi");
-        tf.setFont(megrim22);
-        tf.setMaxWidth(200);
-        tf.setOpacity(0.7);
-        */
-
         pane.getChildren().addAll(ring, text);
+        return pane;
+    }
+
+    private Pane getMänguLogo(String logoP, String nimi){
+        Pane pane = new StackPane();
+        Rectangle rect = new Rectangle(200, 200);
+        rect.setFill(Color.rgb(45, 65, 70));
+        rect.setOpacity(0.7);
+        rect.setStroke(Color.WHITE);
+
+        Image logo = new Image(logoP);
+        ImageView iv = new ImageView(logo);
+        iv.setFitWidth(200);
+        iv.setFitHeight(200);
+
+        Text text = new Text();
+        text.setFill(Color.WHITE);
+        text.setText(nimi);
+        text.setFont(megrim50);
+        text.setTextAlignment(TextAlignment.CENTER);
+
+        pane.getChildren().addAll(iv, rect, text);
+
+        pane.setOnMouseEntered(event -> rect.setFill(Color.rgb(53, 69, 73)));
+        pane.setOnMouseExited(event -> rect.setFill(Color.rgb(45, 65, 70)));
+
         return pane;
     }
 }
