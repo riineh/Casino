@@ -69,14 +69,14 @@ public class KasiinoMängGUI extends Application {
         ring.setLayoutX(stseen.getWidth()/2-laius/4);
         ring.setLayoutY(stseen.getHeight()/2-laius/4);
 
-        //nime lahter
+        //nime lahter (allpool kontrollib et lahter ei jääks tühjaks)
         Pane  nimeTextField = new StackPane();
         TextField tf1 = getTextField("Nimi");
         nimeTextField.getChildren().add(tf1);
         nimeTextField.setLayoutX(stseen.getWidth()/2-(225/2));
         nimeTextField.setLayoutY(stseen.getHeight()/2 + 35);
 
-        //vanuse lahter (vanuse kontrolli ei oska hetkel lisada veel)
+        //vanuse lahter (vanuse kontroll tuleb allpool)
         Pane  vanuseTextField = new StackPane();
         TextField tf2 = getTextField("Vanus");
         vanuseTextField.getChildren().add(tf2);
@@ -119,11 +119,21 @@ public class KasiinoMängGUI extends Application {
 
         playNupp.setOnMouseClicked(event -> {juur.getChildren().clear(); //kui play nuppu vajutada, tühjendab juure
             juur.getChildren().addAll(iv2, ring, exitNupp, nimeTextField, vanuseTextField, nextNupp);
-            nextNupp.setOnMouseClicked(event1 -> {juur.getChildren().clear();
-                juur.getChildren().addAll(iv2, bingoNupp, blackjackNupp, slotmachineNupp, exitNupp, backNupp);
-                backNupp.setOnMouseClicked(event2 -> {juur.getChildren().clear();
-                    juur.getChildren().addAll(iv2, ring, exitNupp, nimeTextField, vanuseTextField, nextNupp);
-                });
+            nextNupp.setOnMouseClicked(event1 -> {
+                if (onPiisavVanus(tf2.getText()) && !tf1.getText().equals("Nimi") && !tf1.getText().equals("")) {
+                    juur.getChildren().clear();
+                    juur.getChildren().addAll(iv2, bingoNupp, blackjackNupp, slotmachineNupp, exitNupp, backNupp);
+                    backNupp.setOnMouseClicked(event2 -> {
+                        juur.getChildren().clear();
+                        juur.getChildren().addAll(iv2, ring, exitNupp, nimeTextField, vanuseTextField, nextNupp);
+                    });
+                }
+                else if (!onPiisavVanus(tf2.getText())){
+                    tf2.setText("Vanusepiirang on 21");
+                }
+                else if (tf1.getText().equals("Nimi") || tf1.getText().equals("")){
+                    tf1.setText("Palun sisesta nimi!");
+                }
             });
         });
     }
@@ -233,5 +243,19 @@ public class KasiinoMängGUI extends Application {
         pane.setOnMouseExited(event -> rect.setFill(Color.rgb(45, 65, 70)));
 
         return pane;
+    }
+
+    private boolean onPiisavVanus(String sõne){
+        int vanus;
+        boolean onPiisavVanus = true;
+        try {
+            vanus = Integer.parseInt(sõne);
+            if (vanus < 21){
+                onPiisavVanus = false;
+            }
+        } catch (Exception e){
+            onPiisavVanus = false;
+        }
+        return onPiisavVanus;
     }
 }
