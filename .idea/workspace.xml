@@ -18,8 +18,8 @@
       <file leaf-file-name="KasiinoMängGUI.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/KasiinoMängGUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="71" column="69" lean-forward="false" selection-start-line="71" selection-start-column="69" selection-end-line="71" selection-end-column="69" />
+            <state relative-caret-position="371">
+              <caret line="132" column="56" lean-forward="false" selection-start-line="132" selection-start-column="56" selection-end-line="132" selection-end-column="56" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -378,7 +378,14 @@
       <option name="project" value="LOCAL" />
       <updated>1526124127542</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Lisasin vanusekontrolli">
+      <created>1526126694971</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1526126694971</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -451,7 +458,8 @@
     <MESSAGE value="arendasin peaklassi edasi" />
     <MESSAGE value="Peaklassis väike muudatus" />
     <MESSAGE value="Menüü peaaegu valmis" />
-    <option name="LAST_COMMIT_MESSAGE" value="Menüü peaaegu valmis" />
+    <MESSAGE value="Lisasin vanusekontrolli" />
+    <option name="LAST_COMMIT_MESSAGE" value="Lisasin vanusekontrolli" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -831,8 +839,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/KasiinoMängGUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="71" column="69" lean-forward="false" selection-start-line="71" selection-start-column="69" selection-end-line="71" selection-end-column="69" />
+        <state relative-caret-position="371">
+          <caret line="132" column="56" lean-forward="false" selection-start-line="132" selection-start-column="56" selection-end-line="132" selection-end-column="56" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

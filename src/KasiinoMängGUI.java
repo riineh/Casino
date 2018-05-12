@@ -120,7 +120,9 @@ public class KasiinoMängGUI extends Application {
         playNupp.setOnMouseClicked(event -> {juur.getChildren().clear(); //kui play nuppu vajutada, tühjendab juure
             juur.getChildren().addAll(iv2, ring, exitNupp, nimeTextField, vanuseTextField, nextNupp);
             nextNupp.setOnMouseClicked(event1 -> {
-                if (onPiisavVanus(tf2.getText()) && !tf1.getText().equals("Nimi") && !tf1.getText().equals("")) {
+                //kontrollib vanust ja et nime lahter ei oleks tühi
+                if (onPiisavVanus(tf2.getText()) && !tf1.getText().equals("Nimi") && !tf1.getText().equals("") &&
+                        !tf1.getText().equals("Palun sisesta nimi!")) {
                     juur.getChildren().clear();
                     juur.getChildren().addAll(iv2, bingoNupp, blackjackNupp, slotmachineNupp, exitNupp, backNupp);
                     backNupp.setOnMouseClicked(event2 -> {
@@ -129,10 +131,10 @@ public class KasiinoMängGUI extends Application {
                     });
                 }
                 else if (!onPiisavVanus(tf2.getText())){
-                    tf2.setText("Vanusepiirang on 21");
+                    tf2.setText("Vanusepiirang on 21");  //kui vanus pole piisav siis lahter täitub vastava tekstiga
                 }
-                else if (tf1.getText().equals("Nimi") || tf1.getText().equals("")){
-                    tf1.setText("Palun sisesta nimi!");
+                else if (tf1.getText().equals("Nimi") || tf1.getText().equals("") || tf1.getText().equals("Palun sisesta nimi!")){
+                    tf1.setText("Palun sisesta nimi!"); //kui tühi nimelahter siis lahter täitub vastava tekstiga
                 }
             });
         });
