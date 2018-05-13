@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.control.TextField;
+import slot_machine.SlotGUI;
+
 import java.io.*;
 
 public class KasiinoMängGUI extends Application {
@@ -125,6 +127,14 @@ public class KasiinoMängGUI extends Application {
                         !tf1.getText().equals("Palun sisesta nimi!")) {
                     juur.getChildren().clear();
                     juur.getChildren().addAll(iv2, bingoNupp, blackjackNupp, slotmachineNupp, exitNupp, backNupp);
+                    slotmachineNupp.setOnMouseClicked(event2 -> {
+                        try {
+                            SlotGUI uus = new SlotGUI();
+                            uus.start(stage);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    });
                     backNupp.setOnMouseClicked(event2 -> {
                         juur.getChildren().clear();
                         juur.getChildren().addAll(iv2, ring, exitNupp, nimeTextField, vanuseTextField, nextNupp);
