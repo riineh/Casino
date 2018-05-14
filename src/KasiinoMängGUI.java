@@ -146,7 +146,7 @@ public class KasiinoMängGUI extends Application {
                 }
             });
         });
-        bingoNupp.setOnMouseClicked(event1 -> {
+        bingoNupp.setOnMouseClicked(event -> {
             BingoMäng bingoMäng = null;
             try {
                 bingoMäng = new BingoMäng(stseen);
@@ -156,7 +156,7 @@ public class KasiinoMängGUI extends Application {
             Group bingoRoot = bingoMäng.getJuur();
             bingoRoot.getChildren().addAll(exitNupp, menuNupp);
             stseen.setRoot(bingoRoot);
-            menuNupp.setOnMouseClicked(event2 -> {
+            menuNupp.setOnMouseClicked(event1 -> {
                 stseen.setRoot(juur);
                 juur.getChildren().add(exitNupp);
             });
