@@ -100,6 +100,8 @@ public class SlotGUI  {
                 final long startNanoTime = System.nanoTime();
 
 
+
+
             } else if (tf1.getText().equals("5")){
                 juur.getChildren().clear();
                 juur.getChildren().addAll(iv2, ruut);
