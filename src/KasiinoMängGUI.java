@@ -109,11 +109,26 @@ public class KasiinoMängGUI extends Application {
         Pane menuNupp = getSuurNupp("Menu");
         menuNupp.setLayoutX(50);
         menuNupp.setLayoutY(50);
+        menuNupp.setOnMouseClicked(event1 -> {
+            stseen.setRoot(juur);
+            juur.getChildren().add(exitNupp);
+        });
 
         //bingo alusta mängu
         Pane bingoNupp = getMänguLogo(bingoLogo, "Bingo");
         bingoNupp.setLayoutX(stseen.getWidth() / 6);
         bingoNupp.setLayoutY(stseen.getHeight() / 2 - 100);
+        bingoNupp.setOnMouseClicked(event -> {
+            BingoMäng bingoMäng = null;
+            try {
+                bingoMäng = new BingoMäng(stseen);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Group bingoRoot = bingoMäng.getJuur();
+            bingoRoot.getChildren().addAll(exitNupp, menuNupp);
+            stseen.setRoot(bingoRoot);
+        });
 
         //blackjack alusta mängu
         Pane blackjackNupp = getMänguLogo(blacjackLogo, "Black-\njack");
@@ -124,6 +139,17 @@ public class KasiinoMängGUI extends Application {
         Pane slotmachineNupp = getMänguLogo(slotMachineLogo, "Slot\nMachine");
         slotmachineNupp.setLayoutX((stseen.getWidth() / 6) + 600);
         slotmachineNupp.setLayoutY(stseen.getHeight() / 2 - 100);
+        slotmachineNupp.setOnMouseClicked(event -> {
+            SlotGUI slotMäng = null;
+            try {
+                slotMäng = new SlotGUI(stseen);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Group slotRoot = slotMäng.start();
+            slotRoot.getChildren().addAll(exitNupp, menuNupp);
+            stseen.setRoot(slotRoot);
+        });
 
         //mängu interaktiivsus hakkab siit
         playNupp.setOnMouseClicked(event -> {
@@ -144,21 +170,6 @@ public class KasiinoMängGUI extends Application {
                 } else if (tf1.getText().equals("Nimi") || tf1.getText().equals("") || tf1.getText().equals("Palun sisesta nimi!")) {
                     tf1.setText("Palun sisesta nimi!"); //kui tühi nimelahter siis lahter täitub vastava tekstiga
                 }
-            });
-        });
-        bingoNupp.setOnMouseClicked(event -> {
-            BingoMäng bingoMäng = null;
-            try {
-                bingoMäng = new BingoMäng(stseen);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            Group bingoRoot = bingoMäng.getJuur();
-            bingoRoot.getChildren().addAll(exitNupp, menuNupp);
-            stseen.setRoot(bingoRoot);
-            menuNupp.setOnMouseClicked(event1 -> {
-                stseen.setRoot(juur);
-                juur.getChildren().add(exitNupp);
             });
         });
     }
