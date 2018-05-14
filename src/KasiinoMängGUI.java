@@ -1,3 +1,4 @@
+import bingo.BingoMäng;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -25,9 +26,9 @@ public class KasiinoMängGUI extends Application {
     private String blacjackLogo = "file:blackjack.jpg";
     private String slotMachineLogo = "file:slotMachine2.jpg";
 
-    private Font megrim50 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),50);
-    private Font megrim35 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),35);
-    private Font megrim22 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),22);
+    private Font megrim50 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")), 50);
+    private Font megrim35 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")), 35);
+    private Font megrim22 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")), 22);
 
     private int kõrgus = 700;
     private int laius = 1200;
@@ -104,6 +105,11 @@ public class KasiinoMängGUI extends Application {
         backNupp.setLayoutX(50);
         backNupp.setLayoutY(50);
 
+        //menu nupp
+        Pane menuNupp = getSuurNupp("Menu");
+        menuNupp.setLayoutX(50);
+        menuNupp.setLayoutY(50);
+
         //bingo alusta mängu
         Pane bingoNupp = getMänguLogo(bingoLogo, "Bingo");
         bingoNupp.setLayoutX(stseen.getWidth() / 6);
@@ -118,20 +124,10 @@ public class KasiinoMängGUI extends Application {
         Pane slotmachineNupp = getMänguLogo(slotMachineLogo, "Slot\nMachine");
         slotmachineNupp.setLayoutX((stseen.getWidth() / 6) + 600);
         slotmachineNupp.setLayoutY(stseen.getHeight() / 2 - 100);
-        slotmachineNupp.setOnMouseClicked(event3 -> {
-            SlotGUI uus = null;
-            try {
-                uus = new SlotGUI(stseen);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            Group SlotJuur = uus.start();
-            SlotJuur.getChildren().add(exitNupp);
-            stseen.setRoot(SlotJuur);
 
-        });
+        //mängu interaktiivsus hakkab siit
         playNupp.setOnMouseClicked(event -> {
-            juur.getChildren().clear(); //kui play nuppu vajutada, tühjendab juure
+            juur.getChildren().clear(); //kui play nuppu vajutada, tühjendab juure ja lisab uuesti vajalikud asjad
             juur.getChildren().addAll(iv2, ring, exitNupp, nimeTextField, vanuseTextField, nextNupp);
             nextNupp.setOnMouseClicked(event1 -> {
                 //kontrollib vanust ja et nime lahter ei oleks tühi
@@ -139,12 +135,10 @@ public class KasiinoMängGUI extends Application {
                         !tf1.getText().equals("Palun sisesta nimi!")) {
                     juur.getChildren().clear();
                     juur.getChildren().addAll(iv2, bingoNupp, blackjackNupp, slotmachineNupp, exitNupp, backNupp);
-
                     backNupp.setOnMouseClicked(event2 -> {
                         juur.getChildren().clear();
                         juur.getChildren().addAll(iv2, ring, exitNupp, nimeTextField, vanuseTextField, nextNupp);
                     });
-
                 } else if (!onPiisavVanus(tf2.getText())) {
                     tf2.setText("Vanusepiirang on 21");  //kui vanus pole piisav siis lahter täitub vastava tekstiga
                 } else if (tf1.getText().equals("Nimi") || tf1.getText().equals("") || tf1.getText().equals("Palun sisesta nimi!")) {
@@ -152,11 +146,27 @@ public class KasiinoMängGUI extends Application {
                 }
             });
         });
+        bingoNupp.setOnMouseClicked(event -> {
+            BingoMäng bingoMäng = null;
+            try {
+                bingoMäng = new BingoMäng(stseen);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Group bingoRoot = bingoMäng.getJuur();
+            bingoRoot.getChildren().addAll(exitNupp, menuNupp);
+            stseen.setRoot(bingoRoot);
+            menuNupp.setOnMouseClicked(event1 -> {
+                stseen.setRoot(juur);
+                juur.getChildren().add(exitNupp);
+            });
+        });
     }
+
     private ImageView looTaust(String logoP, Scene stseen) {
         Image logo = new Image(logoP);
         ImageView iv = new ImageView(logo);
-
+        //määran pildi suuruse soovitud laiuseks ja kõrguseks
         iv.setFitWidth(stseen.getWidth());
         iv.setFitHeight(stseen.getHeight());
 
@@ -165,7 +175,7 @@ public class KasiinoMängGUI extends Application {
         return iv;
     }
 
-    private Pane getVäikeNupp(String tekst){
+    private Pane getVäikeNupp(String tekst) {
         Pane pane = new StackPane();
         Rectangle rect = new Rectangle(115, 50);
         rect.setFill(Color.rgb(45, 65, 70));
@@ -185,7 +195,7 @@ public class KasiinoMängGUI extends Application {
         return pane;
     }
 
-    private Pane getSuurNupp(String tekst){
+    private Pane getSuurNupp(String tekst) {
         Pane pane = new StackPane();
         Rectangle rect = new Rectangle(150, 70);
         rect.setFill(Color.rgb(45, 65, 70));
@@ -205,7 +215,7 @@ public class KasiinoMängGUI extends Application {
         return pane;
     }
 
-    private TextField getTextField(String sisu){
+    private TextField getTextField(String sisu) {
         TextField tf = new TextField();
         tf.setText(sisu);
         tf.setFont(megrim22);
@@ -220,7 +230,7 @@ public class KasiinoMängGUI extends Application {
         Pane pane = new StackPane();
         Circle ring = new Circle();
         ring.setFill(Color.rgb(45, 65, 70));
-        ring.setRadius(laius/4);
+        ring.setRadius(laius / 4);
 
         Text text = new Text();
         text.setFill(Color.WHITE);
@@ -234,7 +244,7 @@ public class KasiinoMängGUI extends Application {
         return pane;
     }
 
-    private Pane getMänguLogo(String logoP, String nimi){
+    private Pane getMänguLogo(String logoP, String nimi) {
         Pane pane = new StackPane();
         Rectangle rect = new Rectangle(200, 200);
         rect.setFill(Color.rgb(45, 65, 70));
@@ -260,19 +270,17 @@ public class KasiinoMängGUI extends Application {
         return pane;
     }
 
-    private boolean onPiisavVanus(String sõne){
+    private boolean onPiisavVanus(String sõne) {
         int vanus;
         boolean onPiisavVanus = true;
         try {
             vanus = Integer.parseInt(sõne);
-            if (vanus < 21){
+            if (vanus < 21) {
                 onPiisavVanus = false;
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             onPiisavVanus = false;
         }
         return onPiisavVanus;
     }
-    }
-
-
+}
