@@ -1,4 +1,4 @@
-import bingo.BingoMäng;
+import bingo.BingoGUI;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -119,13 +119,13 @@ public class KasiinoMängGUI extends Application {
         bingoNupp.setLayoutX(stseen.getWidth() / 6);
         bingoNupp.setLayoutY(stseen.getHeight() / 2 - 100);
         bingoNupp.setOnMouseClicked(event -> {
-            BingoMäng bingoMäng = null;
+            BingoGUI bingoGUI = null;
             try {
-                bingoMäng = new BingoMäng(stseen);
+                bingoGUI = new BingoGUI(stseen);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            Group bingoRoot = bingoMäng.getJuur();
+            Group bingoRoot = bingoGUI.getJuur();
             bingoRoot.getChildren().addAll(exitNupp, menuNupp);
             stseen.setRoot(bingoRoot);
         });

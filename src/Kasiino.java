@@ -43,6 +43,7 @@ public class Kasiino {
             String valik = küsimus.küsiVastus(sc);    //mängijalt küsitakse eelnevalt loodud küsimus ning tagastatakse vastus
 
             //bingo mängu if haru
+            /*
             if (valik.equals("bingo")) {
                 while (true) {    //mäng on tsükklis selleks, et mängija ei peaks vahepeal uuesti kasiino menüüsse tagasi tulema
                     Bingo mäng = new Bingo();    //loob uue bingo mängu
@@ -71,7 +72,7 @@ public class Kasiino {
             } else if (valik.equals("blackjack")) {
                 BlackjackLoogika blackjack = new BlackjackLoogika(mängija.getNimi(), mängija.getRaha());
                 blackjack.alustaMängu();
-            }
+            }*/
 
             //kasiinost lahkumise osa
             ValikVastusegaKüsimus küsimus2 = new ValikVastusegaKüsimus("Kas soovid ka kasiinost lahkuda?",

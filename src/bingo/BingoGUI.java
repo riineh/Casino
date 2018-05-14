@@ -1,22 +1,27 @@
 package bingo;
 
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.scene.transform.Transform;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
-public class BingoMäng {
+public class BingoGUI {
     private int kõrgus = 700;
     private int laius = 1200;
 
@@ -26,14 +31,21 @@ public class BingoMäng {
     private Font megrim50 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),50);
     private Font megrim35 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),35);
     private Font megrim22 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),22);
+    private Font litSans22 = Font.loadFont(new FileInputStream(new File("LitSans-Medium.otf")),25);
+
+    private Color sinine = Color.rgb(41,79, 218);
+    private Color punane = Color.rgb(255,38,5);
+    private Color roheline = Color.rgb(0,101,2);
+    private Color oranz = Color.rgb(255,150,5);
+    private List<Color> värvid = Arrays.asList(sinine, punane, roheline, oranz);
 
     private Group juur;
     private Scene stseen;
 
     //hoiab bingopileti andmeid
-    private BingoPilet bingo;
+    private BingoPilet bingoPilet;
 
-    public BingoMäng(Scene stseen) throws FileNotFoundException {
+    public BingoGUI(Scene stseen) throws FileNotFoundException {
         this.stseen = stseen;
     }
 
@@ -96,6 +108,42 @@ public class BingoMäng {
         });
         mängimaNupp.setOnMouseClicked(event -> {juur.getChildren().removeAll(infoRing, mängimaNupp, reeglidNupp);
             juur.getChildren().addAll(tagasiNupp, ruut1, ruut2);
+        });
+
+        ruut1.setOnMouseClicked(event -> {juur.getChildren().removeAll(ruut1, ruut2, tagasiNupp);
+            BingoPilet p1 = null;
+            try {
+                p1 = new BingoPilet();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Pane bingoPilet1 = p1.drawBingoPilet();
+            bingoPilet1.setLayoutX(100);
+            bingoPilet1.setLayoutY(stseen.getHeight()/2-150);
+            juur.getChildren().add(bingoPilet1);
+
+            List<Integer> loositudArvud = new ArrayList<>();
+            LoosiNumber loos = new LoosiNumber(1, 75);
+            numbriLoos(loositudArvud, loos, p1, 40);
+
+        });
+
+        ruut2.setOnMouseClicked(event -> {juur.getChildren().removeAll(ruut1, ruut2, tagasiNupp);
+            BingoPilet p1 = null;
+            BingoPilet p2 = null;
+            try {
+                p1 = new BingoPilet();
+                p2 = new BingoPilet();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Pane bingoPilet1 = p1.drawBingoPilet();
+            Pane bingoPilet2 = p2.drawBingoPilet();
+            bingoPilet1.setLayoutX(100);
+            bingoPilet1.setLayoutY(stseen.getHeight()/2-150);
+            bingoPilet2.setLayoutX(450);
+            bingoPilet2.setLayoutY(stseen.getHeight()/2-150);
+            juur.getChildren().addAll(bingoPilet1, bingoPilet2);
         });
 
         return juur;
@@ -161,6 +209,7 @@ public class BingoMäng {
         Rectangle rect = new Rectangle(200, 200);
         rect.setFill(Color.rgb(45, 65, 70));
         rect.setStroke(Color.WHITE);
+        rect.setOpacity(0.7);
 
         Image logo = new Image(logoP);
         ImageView iv = new ImageView(logo);
@@ -173,12 +222,27 @@ public class BingoMäng {
         text.setFont(megrim50);
         text.setTextAlignment(TextAlignment.CENTER);
 
-        pane.getChildren().addAll(rect, text);
-        pane.setOpacity(0.8);
+        pane.getChildren().addAll(iv, rect, text);
 
         pane.setOnMouseEntered(event -> rect.setFill(Color.rgb(53, 69, 73)));
         pane.setOnMouseExited(event -> rect.setFill(Color.rgb(45, 65, 70)));
 
         return pane;
     }
+
+    public void numbriLoos(List<Integer> list, LoosiNumber loos, BingoPilet pilet, int kogus){
+        int loositud;
+        for (int i=0; i<kogus; i++) {
+            while (true) {
+                int loositudArv = loos.suvalineNumber();
+                if (!list.contains(loositudArv)) {
+                    list.add(loositudArv);
+                    loositud = loositudArv;
+                    break;
+                }
+            }
+            pilet.kontrolli(loositud);
+        }
+    }
+
 }
