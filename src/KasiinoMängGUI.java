@@ -135,7 +135,7 @@ public class KasiinoMängGUI extends Application {
         blackjackNupp.setLayoutX((stseen.getWidth() / 6) + 300);
         blackjackNupp.setLayoutY(stseen.getHeight() / 2 - 100);
 
-        //slot mmachine alusta mängu
+        //slot machine alusta mängu
         Pane slotmachineNupp = getMänguLogo(slotMachineLogo, "Slot\nMachine");
         slotmachineNupp.setLayoutX((stseen.getWidth() / 6) + 600);
         slotmachineNupp.setLayoutY(stseen.getHeight() / 2 - 100);
@@ -150,6 +150,7 @@ public class KasiinoMängGUI extends Application {
             slotRoot.getChildren().addAll(exitNupp, menuNupp);
             stseen.setRoot(slotRoot);
         });
+
 
         //mängu interaktiivsus hakkab siit
         playNupp.setOnMouseClicked(event -> {
