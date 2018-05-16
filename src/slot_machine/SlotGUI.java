@@ -1,6 +1,8 @@
 package slot_machine;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.FadeTransition;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -19,20 +21,33 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 public class SlotGUI  {
+
+    int panus;
 
     private int kõrgus = 700;
     private int laius = 1200;
 
     private String logoPath = "file:casinoLogo.jpg";
     private String logoPath2 = "file:casinoLogoIlma.jpg";
+    private String slotid = "file:Seven-icon.png";
+    private String slotid2 = "file:Cherry-icon.png";
+    private String slotid3 = "file:Banana-icon.png";
+    private String slotid4 = "file:Plum-icon.png";
+    private String slotid5 = "file:Bar-icon.png";
+    private String slotid6 = "file:Lemon-icon.png";
     private Font megrim35 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),35);
+    private Font megrim50 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),50);
     private Font megrim22 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),22);
     private Scene stseen;
 
@@ -54,14 +69,152 @@ public class SlotGUI  {
         return iv;
     }
 
+    private ImageView slot(String logoP, Scene stseen) {
+        Image logo = new Image(logoP);
+        ImageView iv = new ImageView(logo);
+        //määran pildi suuruse soovitud laiuseks ja kõrguseks
+        iv.setFitWidth(100);
+        iv.setFitHeight(100);
+
+        iv.setX(100);
+        iv.setY(100);
+
+
+        return iv;
+    }
+
     public Group start() {
         Group juur = new Group();
-
-
         ImageView iv2 = looTaust(logoPath2, stseen);
+
+        //esimese sloti ikoonid
+        ImageView slot = slot(slotid, stseen);
+        ImageView slot2 = slot(slotid2, stseen);
+        ImageView slot3 = slot(slotid3, stseen);
+        ImageView slot4 = slot(slotid4, stseen);
+        ImageView slot5 = slot(slotid5, stseen);
+        ImageView slot6 = slot(slotid6, stseen);
+        //esimese sloti ikoonide suurused
+        slot.setFitWidth(125);
+        slot.setFitHeight(125);
+        slot2.setFitHeight(125);
+        slot2.setFitWidth(125);
+        slot3.setFitWidth(125);
+        slot3.setFitHeight(125);
+        slot4.setFitWidth(125);
+        slot4.setFitHeight(125);
+        slot5.setFitWidth(125);
+        slot5.setFitHeight(125);
+        slot6.setFitHeight(125);
+        slot6.setFitWidth(125);
+        //esimese sloti ikoonide asukohad
+        slot2.setLayoutX(235);
+        slot2.setLayoutY(190);
+        slot.setLayoutY(190);
+        slot.setLayoutX(235);
+        slot3.setLayoutY(190);
+        slot3.setLayoutX(235);
+        slot4.setLayoutY(190);
+        slot4.setLayoutX(235);
+        slot5.setLayoutY(190);
+        slot5.setLayoutX(235);
+        slot6.setLayoutY(190);
+        slot6.setLayoutX(235);
+        //esimese sloti ikoonide list
+        List<ImageView> list = new ArrayList<>();
+        list.add(slot);
+        list.add(slot2);
+        list.add(slot3);
+        list.add(slot4);
+        list.add(slot5);
+        list.add(slot6);
+
+
+        //teise sloti ikoonid
+        ImageView slot7 = slot(slotid, stseen);
+        ImageView slot8 = slot(slotid2, stseen);
+        ImageView slot9 = slot(slotid3, stseen);
+        ImageView slot10 = slot(slotid4, stseen);
+        ImageView slot11 = slot(slotid5, stseen);
+        ImageView slot12 = slot(slotid6, stseen);
+        //teise sloti ikoonide suurused
+        slot7.setFitWidth(125);
+        slot7.setFitHeight(125);
+        slot8.setFitHeight(125);
+        slot8.setFitWidth(125);
+        slot9.setFitWidth(125);
+        slot9.setFitHeight(125);
+        slot10.setFitWidth(125);
+        slot10.setFitHeight(125);
+        slot11.setFitWidth(125);
+        slot11.setFitHeight(125);
+        slot12.setFitHeight(125);
+        slot12.setFitWidth(125);
+        //teise sloti ikoonide asukohad
+        slot7.setLayoutX(435);
+        slot7.setLayoutY(190);
+        slot8.setLayoutY(190);
+        slot8.setLayoutX(435);
+        slot9.setLayoutY(190);
+        slot9.setLayoutX(435);
+        slot10.setLayoutY(190);
+        slot10.setLayoutX(435);
+        slot11.setLayoutY(190);
+        slot11.setLayoutX(435);
+        slot12.setLayoutY(190);
+        slot12.setLayoutX(435);
+        //teise sloti ikoonide list
+        List<ImageView> list2 = new ArrayList<>();
+        list2.add(slot7);
+        list2.add(slot8);
+        list2.add(slot9);
+        list2.add(slot10);
+        list2.add(slot11);
+        list2.add(slot12);
+
+        //kolmanda sloti ikoonid
+        ImageView slot13 = slot(slotid, stseen);
+        ImageView slot14 = slot(slotid2, stseen);
+        ImageView slot15 = slot(slotid3, stseen);
+        ImageView slot16 = slot(slotid4, stseen);
+        ImageView slot17 = slot(slotid5, stseen);
+        ImageView slot18 = slot(slotid6, stseen);
+        //kolmanda sloti ikoonide suurused
+        slot13.setFitWidth(125);
+        slot13.setFitHeight(125);
+        slot14.setFitHeight(125);
+        slot14.setFitWidth(125);
+        slot15.setFitWidth(125);
+        slot15.setFitHeight(125);
+        slot16.setFitWidth(125);
+        slot16.setFitHeight(125);
+        slot17.setFitWidth(125);
+        slot17.setFitHeight(125);
+        slot18.setFitHeight(125);
+        slot18.setFitWidth(125);
+        //kolmanda sloti ikoonide asukohad
+        slot13.setLayoutX(635);
+        slot13.setLayoutY(190);
+        slot14.setLayoutY(190);
+        slot14.setLayoutX(635);
+        slot15.setLayoutY(190);
+        slot15.setLayoutX(635);
+        slot16.setLayoutY(190);
+        slot16.setLayoutX(635);
+        slot17.setLayoutY(190);
+        slot17.setLayoutX(635);
+        slot18.setLayoutY(190);
+        slot18.setLayoutX(635);
+        //kolmanda sloti ikoonide list
+        List<ImageView> list3 = new ArrayList<>();
+        list3.add(slot13);
+        list3.add(slot14);
+        list3.add(slot15);
+        list3.add(slot16);
+        list3.add(slot17);
+        list3.add(slot18);
+
         juur.getChildren().add(iv2);
-
-
 
         Pane ring = getAndmedKüsida();
         ring.setLayoutX(stseen.getWidth()/2-laius/4);
@@ -70,43 +223,110 @@ public class SlotGUI  {
         ruut.setLayoutX(100);
         ruut.setLayoutY(100);
 
-        Pane  nimeTextField = new StackPane();
-        TextField tf1 = getTextField("[3] või [5]");
+        Pane slotruut1 = slotruut();
+        slotruut1.setLayoutX(300);
+        slotruut1.setLayoutY(200);
+
+        Pane slotruut2 = slotruut();
+        slotruut2.setLayoutX(500);
+        slotruut2.setLayoutY(200);
+
+        Pane slotruut3 = slotruut();
+        slotruut3.setLayoutX(700);
+        slotruut3.setLayoutY(200);
+
+        Pane startnupp = start("START");
+        startnupp.setLayoutY(520);
+        startnupp.setLayoutX(525);
+
+
+
+        Pane ruut1 = getRuutTekstiga("Kolmene\nautomaat");
+        ruut1.setLayoutX(stseen.getWidth()/2-250);
+        ruut1.setLayoutY(stseen.getHeight()/2-150);
+
+        Pane ruut2 = getRuutTekstiga("Viiene\nautomaat");
+        ruut2.setLayoutX(stseen.getWidth()/2 + 50);
+        ruut2.setLayoutY(stseen.getHeight()/2-150);
+
+        Pane nimeTextField = new StackPane();
+        TextField tf1 = getTextField("Sisesta panus: ");
         nimeTextField.getChildren().add(tf1);
-        nimeTextField.setLayoutX(stseen.getWidth()/2-(225/2));
-        nimeTextField.setLayoutY(stseen.getHeight()/2+ 65);
+        nimeTextField.setLayoutX(485);
+        nimeTextField.setLayoutY(415);
+
         Pane playNupp = getVäikeNupp("Play");
         playNupp.setLayoutX((stseen.getWidth()/2)-(115/2));
         playNupp.setLayoutY(stseen.getHeight()/2 + 125);
 
-        juur.getChildren().addAll(ring, nimeTextField, playNupp);
+        juur.getChildren().addAll(ring, playNupp, nimeTextField);
 
-        Canvas canvas = new Canvas(1200, 700);
 
-        Image seitse = new Image("http://icons.iconarchive.com/icons/designcontest/casino/96/Seven-icon.png");
-        Image kirsid  = new Image("http://icons.iconarchive.com/icons/designcontest/casino/96/Cherry-icon.png");
-        Image banaanid = new Image("http://icons.iconarchive.com/icons/designcontest/casino/96/Banana-icon.png");
-        Image sidrun = new Image("http://icons.iconarchive.com/icons/designcontest/casino/96/Lemon-icon.png");
-        Image ploom = new Image("http://icons.iconarchive.com/icons/designcontest/casino/96/Plum-icon.png");
-        Image arbuus = new Image("http://icons.iconarchive.com/icons/designcontest/casino/96/Watermelon-icon.png");
 
 
         playNupp.setOnMouseClicked(event -> {
-            if (tf1.getText().equals("3")) {
-                juur.getChildren().clear();
-                juur.getChildren().addAll(iv2, ruut, canvas);
-                GraphicsContext gc = canvas.getGraphicsContext2D();
+            juur.getChildren().clear();
+            juur.getChildren().addAll(iv2, ruut1, ruut2);
+        });
 
-                final long startNanoTime = System.nanoTime();
+        ruut1.setOnMouseClicked(event -> {juur.getChildren().clear();
+            juur.getChildren().addAll(iv2, ruut,slotruut1, slotruut2, slotruut3, startnupp);
+        });
 
 
 
+        startnupp.setOnMouseClicked(event -> {
+            juur.getChildren().clear();
+            juur.getChildren().addAll(iv2, ruut,slotruut1, slotruut2, slotruut3, startnupp);
+            juur.getChildren().addAll(slot, slot2, slot3, slot4, slot5, slot6,
+                    slot7, slot8, slot9, slot10, slot11, slot12, slot13, slot14, slot15, slot16, slot17, slot18);
+            Collections.shuffle(list);
+            Collections.shuffle(list2);
+            Collections.shuffle(list3);
+            for (int i = 0; i < 6; i++) {
+                if (i == 5) {
+                    FadeTransition ft = new FadeTransition(Duration.millis(100 *i+1), list.get(i));
+                    ft.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                    ft.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                    ft.setCycleCount(8); // lõpmatu tsüklite arv
+                    ft.setAutoReverse(true); // lõppu jõudes tagasi, algusest jälle edasi
+                    ft.play();
 
-            } else if (tf1.getText().equals("5")){
-                juur.getChildren().clear();
-                juur.getChildren().addAll(iv2, ruut);
-            } else {
-                tf1.setText("Ebasobiv sisend!");
+                    FadeTransition ft2 = new FadeTransition(Duration.millis(100 *i+1), list2.get(i));
+                    ft2.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                    ft2.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                    ft2.setCycleCount(8); // lõpmatu tsüklite arv
+                    ft2.setAutoReverse(true); // lõppu jõudes tagasi, algusest jälle edasi
+                    ft2.play();
+
+                    FadeTransition ft3 = new FadeTransition(Duration.millis(100 *i+1), list3.get(i));
+                    ft3.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                    ft3.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                    ft3.setCycleCount(8); // lõpmatu tsüklite arv
+                    ft3.setAutoReverse(true); // lõppu jõudes tagasi, algusest jälle edasi
+                    ft3.play();
+                } else {
+                    FadeTransition ft = new FadeTransition(Duration.millis(100 *i+1), list.get(i));
+                    ft.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                    ft.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                    ft.setCycleCount(8); // lõpmatu tsüklite arv
+                    ft.setAutoReverse(false); // lõppu jõudes tagasi, algusest jälle edasi
+                    ft.play();
+
+                    FadeTransition ft2 = new FadeTransition(Duration.millis(100 *i+1), list2.get(i));
+                    ft2.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                    ft2.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                    ft2.setCycleCount(8); // lõpmatu tsüklite arv
+                    ft2.setAutoReverse(false); // lõppu jõudes tagasi, algusest jälle edasi
+                    ft2.play();
+
+                    FadeTransition ft3 = new FadeTransition(Duration.millis(100 *i+1), list3.get(i));
+                    ft3.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                    ft3.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                    ft3.setCycleCount(8); // lõpmatu tsüklite arv
+                    ft3.setAutoReverse(false); // lõppu jõudes tagasi, algusest jälle edasi
+                    ft3.play();
+                }
             }
         });
         return juur;
@@ -164,6 +384,26 @@ public class SlotGUI  {
         return pane;
     }
 
+    private Pane start(String tekst){
+        Pane pane = new StackPane();
+        Rectangle rect = new Rectangle(140, 60);
+        rect.setFill(Color.rgb(160, 00, 00));
+        rect.setStroke(Color.WHITE);
+
+        Text text = new Text();
+        text.setFill(Color.WHITE);
+        text.setText(tekst);
+        text.setFont(megrim50);
+
+        pane.getChildren().addAll(rect, text);
+        pane.setOpacity(0.95);
+
+        pane.setOnMouseEntered(event -> rect.setFill(Color.rgb(160, 10, 20)));
+        pane.setOnMouseExited(event -> rect.setFill(Color.rgb(160, 00, 00)));
+
+        return pane;
+    }
+
     private Pane taustruut() {
         Pane pane = new StackPane();
         Rectangle ruut = new Rectangle();
@@ -175,6 +415,40 @@ public class SlotGUI  {
         pane.getChildren().addAll(ruut);
         return pane;
 
+    }
+
+    private Pane slotruut() {
+        Pane pane = new StackPane();
+        Rectangle ruut = new Rectangle();
+        ruut.setFill(Color.WHITE);
+        ruut.setHeight(300);
+        ruut.setWidth(190);
+
+        pane.getChildren().addAll(ruut);
+        return pane;
+
+    }
+
+    private Pane getRuutTekstiga(String arv) {
+        Pane pane = new StackPane();
+        Rectangle rect = new Rectangle(200, 200);
+        rect.setFill(Color.rgb(45, 65, 70));
+        rect.setStroke(Color.WHITE);
+
+
+        Text text = new Text();
+        text.setFill(Color.WHITE);
+        text.setText(arv);
+        text.setFont(megrim35);
+        text.setTextAlignment(TextAlignment.CENTER);
+
+        pane.getChildren().addAll(rect, text);
+        pane.setOpacity(0.8);
+
+        pane.setOnMouseEntered(event -> rect.setFill(Color.rgb(53, 69, 73)));
+        pane.setOnMouseExited(event -> rect.setFill(Color.rgb(45, 65, 70)));
+
+        return pane;
     }
 
 }
