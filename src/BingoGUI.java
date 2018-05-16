@@ -1,6 +1,5 @@
-package bingo;
-
-import javafx.geometry.Pos;
+import bingo.BingoPilet;
+import bingo.LoosiNumber;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -11,7 +10,6 @@ import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.scene.transform.Transform;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,11 +25,12 @@ public class BingoGUI {
 
     private String bingoLogoPath = "file:bingoTaust3.jpg";
     private String bingoLogo = "file:bingoKaart.jpg";
+
     private Font megrim100 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),100);
     private Font megrim50 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),50);
     private Font megrim35 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),35);
     private Font megrim22 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),22);
-    private Font litSans22 = Font.loadFont(new FileInputStream(new File("LitSans-Medium.otf")),25);
+    private Font litSans22 = Font.loadFont(new FileInputStream(new File("LitSans-Medium.otf")),45);
 
     private Color sinine = Color.rgb(41,79, 218);
     private Color punane = Color.rgb(255,38,5);
@@ -39,18 +38,16 @@ public class BingoGUI {
     private Color oranz = Color.rgb(255,150,5);
     private List<Color> värvid = Arrays.asList(sinine, punane, roheline, oranz);
 
-    private Group juur;
     private Scene stseen;
+    private Mängija mängija;
 
-    //hoiab bingopileti andmeid
-    private BingoPilet bingoPilet;
-
-    public BingoGUI(Scene stseen) throws FileNotFoundException {
+    public BingoGUI(Scene stseen, Mängija mängija) throws FileNotFoundException {
         this.stseen = stseen;
+        this.mängija = mängija;
     }
 
     public Group getJuur() {
-        juur = new Group();
+        Group juur = new Group();
 
         ImageView iv = looTaust(bingoLogoPath, this.stseen);
         juur.getChildren().add(iv);
@@ -98,19 +95,24 @@ public class BingoGUI {
         ruut2.setLayoutX(stseen.getWidth()/2 + 50);
         ruut2.setLayoutY(stseen.getHeight()/2-150);
 
-        juur.getChildren().addAll(infoRing, reeglidNupp, mängimaNupp);
+        Pane mängijaInfo = mängija.getProfiiliPane();
+        mängijaInfo.setLayoutX(50);
+        mängijaInfo.setLayoutY(stseen.getHeight()-150);
+
+        juur.getChildren().addAll(infoRing, reeglidNupp, mängimaNupp, mängijaInfo);
 
         reeglidNupp.setOnMouseClicked(event -> {juur.getChildren().removeAll(infoRing, mängimaNupp, reeglidNupp);
             juur.getChildren().addAll(reeglidRing, tagasiNupp);
         });
-        tagasiNupp.setOnMouseClicked(event -> {juur.getChildren().removeAll(reeglidRing, tagasiNupp, ruut1, ruut2);
-            juur.getChildren().addAll(infoRing, reeglidNupp, mängimaNupp);
+        tagasiNupp.setOnMouseClicked(event -> {juur.getChildren().removeAll(reeglidRing, tagasiNupp, ruut1, ruut2, mängijaInfo);
+            juur.getChildren().addAll(infoRing, reeglidNupp, mängimaNupp, mängijaInfo);
         });
-        mängimaNupp.setOnMouseClicked(event -> {juur.getChildren().removeAll(infoRing, mängimaNupp, reeglidNupp);
+        mängimaNupp.setOnMouseClicked(event -> {juur.getChildren().removeAll(infoRing, mängimaNupp, reeglidNupp, mängijaInfo);
             juur.getChildren().addAll(tagasiNupp, ruut1, ruut2);
         });
 
         ruut1.setOnMouseClicked(event -> {juur.getChildren().removeAll(ruut1, ruut2, tagasiNupp);
+            mängija.setRaha(mängija.getRaha()-10);
             BingoPilet p1 = null;
             try {
                 p1 = new BingoPilet();
@@ -124,11 +126,13 @@ public class BingoGUI {
 
             List<Integer> loositudArvud = new ArrayList<>();
             LoosiNumber loos = new LoosiNumber(1, 75);
-            numbriLoos(loositudArvud, loos, p1, 40);
+            List<BingoPilet> piletid = Arrays.asList(p1);
+            numbriLoos(loositudArvud, loos, piletid, 40);
 
         });
 
         ruut2.setOnMouseClicked(event -> {juur.getChildren().removeAll(ruut1, ruut2, tagasiNupp);
+            mängija.setRaha(mängija.getRaha()-20);
             BingoPilet p1 = null;
             BingoPilet p2 = null;
             try {
@@ -144,6 +148,11 @@ public class BingoGUI {
             bingoPilet2.setLayoutX(450);
             bingoPilet2.setLayoutY(stseen.getHeight()/2-150);
             juur.getChildren().addAll(bingoPilet1, bingoPilet2);
+
+            List<Integer> loositudArvud = new ArrayList<>();
+            LoosiNumber loos = new LoosiNumber(1, 75);
+            List<BingoPilet> piletid = Arrays.asList(p1, p2);
+            numbriLoos(loositudArvud, loos, piletid, 40);
         });
 
         return juur;
@@ -166,7 +175,7 @@ public class BingoGUI {
         Circle ring = new Circle();
         ring.setFill(Color.rgb(45, 65, 70));
         ring.setRadius(laius/4);
-        ring.setOpacity(0.8);
+        ring.setOpacity(0.9);
 
         Text text = new Text();
         text.setFill(Color.WHITE);
@@ -187,7 +196,7 @@ public class BingoGUI {
     private Pane getVäikeNupp(String tekst){
         Pane pane = new StackPane();
         Rectangle rect = new Rectangle(160, 50);
-        rect.setFill(Color.rgb(45, 65, 70));
+        rect.setFill(Color.RED);
         rect.setStroke(Color.WHITE);
 
         Text text = new Text();
@@ -198,8 +207,8 @@ public class BingoGUI {
         pane.getChildren().addAll(rect, text);
         pane.setOpacity(0.9);
 
-        pane.setOnMouseEntered(event -> rect.setFill(Color.rgb(53, 69, 73)));
-        pane.setOnMouseExited(event -> rect.setFill(Color.rgb(45, 65, 70)));
+        pane.setOnMouseEntered(event -> rect.setFill(Color.rgb(255, 72, 72)));
+        pane.setOnMouseExited(event -> rect.setFill(Color.RED));
 
         return pane;
     }
@@ -207,9 +216,15 @@ public class BingoGUI {
     private Pane getRuutTekstiga(String arv, String logoP) {
         Pane pane = new StackPane();
         Rectangle rect = new Rectangle(200, 200);
-        rect.setFill(Color.rgb(45, 65, 70));
+
+        List<Color> värvid = Arrays.asList(sinine, punane, roheline, oranz);
+
+        Random suvaline = new Random();
+        int suvalineVärv = suvaline.nextInt(4);
+
+        rect.setFill(värvid.get(suvalineVärv));
         rect.setStroke(Color.WHITE);
-        rect.setOpacity(0.7);
+        rect.setOpacity(0.6);
 
         Image logo = new Image(logoP);
         ImageView iv = new ImageView(logo);
@@ -219,18 +234,18 @@ public class BingoGUI {
         Text text = new Text();
         text.setFill(Color.WHITE);
         text.setText(arv);
-        text.setFont(megrim50);
+        text.setFont(litSans22);
         text.setTextAlignment(TextAlignment.CENTER);
 
         pane.getChildren().addAll(iv, rect, text);
 
-        pane.setOnMouseEntered(event -> rect.setFill(Color.rgb(53, 69, 73)));
-        pane.setOnMouseExited(event -> rect.setFill(Color.rgb(45, 65, 70)));
+        pane.setOnMouseEntered(event -> rect.setOpacity(0.5));
+        pane.setOnMouseExited(event -> rect.setOpacity(0.6));
 
         return pane;
     }
 
-    public void numbriLoos(List<Integer> list, LoosiNumber loos, BingoPilet pilet, int kogus){
+    public void numbriLoos(List<Integer> list, LoosiNumber loos, List<BingoPilet> piletid, int kogus){
         int loositud;
         for (int i=0; i<kogus; i++) {
             while (true) {
@@ -241,8 +256,8 @@ public class BingoGUI {
                     break;
                 }
             }
-            pilet.kontrolli(loositud);
+            int finalLoositud = loositud;
+            piletid.forEach(pilet -> pilet.kontrolli(finalLoositud));
         }
     }
-
 }

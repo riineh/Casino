@@ -1,4 +1,3 @@
-import bingo.BingoGUI;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -23,15 +22,17 @@ public class KasiinoMängGUI extends Application {
     private String logoPath = "file:casinoLogo.jpg";
     private String logoPath2 = "file:casinoLogoIlma.jpg";
     private String bingoLogo = "file:bingo.jpg";
-    private String blacjackLogo = "file:blackjack.jpg";
     private String slotMachineLogo = "file:slotMachine2.jpg";
 
+    private Font megrim65 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),65);
     private Font megrim50 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")), 50);
     private Font megrim35 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")), 35);
     private Font megrim22 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")), 22);
 
     private int kõrgus = 700;
     private int laius = 1200;
+
+    private Mängija mängija;
 
     public KasiinoMängGUI() throws FileNotFoundException {
     }
@@ -45,10 +46,10 @@ public class KasiinoMängGUI extends Application {
         Group juur = new Group();
         Scene stseen = new Scene(juur, laius, kõrgus);
 
-        ImageView iv = looTaust(logoPath, stseen);
+        ImageView iv = looTaust(logoPath, stseen);  //see on mängu taust logoga
         juur.getChildren().add(iv);
 
-        ImageView iv2 = looTaust(logoPath2, stseen);  //siis tekitab uue tausta ilma casino logota
+        ImageView iv2 = looTaust(logoPath2, stseen);  //see on mängu taust ilma casino logota
 
         stage.setScene(stseen);
         stage.setTitle("Casino");
@@ -109,19 +110,69 @@ public class KasiinoMängGUI extends Application {
         Pane menuNupp = getSuurNupp("Menu");
         menuNupp.setLayoutX(50);
         menuNupp.setLayoutY(50);
-        menuNupp.setOnMouseClicked(event1 -> {
-            stseen.setRoot(juur);
-            juur.getChildren().add(exitNupp);
-        });
 
         //bingo alusta mängu
         Pane bingoNupp = getMänguLogo(bingoLogo, "Bingo");
-        bingoNupp.setLayoutX(stseen.getWidth() / 6);
+        bingoNupp.setLayoutX(stseen.getWidth() / 2 - 300);
         bingoNupp.setLayoutY(stseen.getHeight() / 2 - 100);
+
+        //slot machine alusta mängu
+        Pane slotmachineNupp = getMänguLogo(slotMachineLogo, "Slot\nMachine");
+        slotmachineNupp.setLayoutX((stseen.getWidth() / 2 + 50));
+        slotmachineNupp.setLayoutY(stseen.getHeight() / 2 - 100);
+
+        //mängu interaktiivsus hakkab siit
+        menuNupp.setOnMouseClicked(event1 -> {
+            stseen.setRoot(juur);
+            juur.getChildren().clear();
+            Pane profiil = mängija.getProfiiliPane();
+            profiil.setLayoutX(50);
+            profiil.setLayoutY(stseen.getHeight()-150);
+            juur.getChildren().addAll(iv2, exitNupp, profiil, slotmachineNupp, bingoNupp, backNupp);
+        });
+
+        playNupp.setOnMouseClicked(event -> {
+            juur.getChildren().clear(); //kui play nuppu vajutada, tühjendab juure ja lisab uuesti vajalikud asjad
+            juur.getChildren().addAll(iv2, ring, exitNupp, nimeTextField, vanuseTextField, nextNupp);
+            nextNupp.setOnMouseClicked(event1 -> {
+                //kontrollib vanust ja et nime lahter ei oleks tühi
+                if (onPiisavVanus(tf2.getText()) && !tf1.getText().equals("Nimi") && !tf1.getText().equals("") &&
+                        !tf1.getText().equals("Palun sisesta nimi!") && tf1.getText().length()<=12) {
+                    try {
+                        mängija = new Mängija(tf1.getText(), Integer.parseInt(tf2.getText())); //loob uue mängija
+                        mängija.setRaha(200); //annab mängijale alustuseks 200 eurot
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    Pane profiil = mängija.getProfiiliPane();
+                    profiil.setLayoutX(50);
+                    profiil.setLayoutY(stseen.getHeight()-150);
+                    juur.getChildren().clear();
+                    juur.getChildren().addAll(iv2, bingoNupp, slotmachineNupp, exitNupp, backNupp, profiil);
+                    backNupp.setOnMouseClicked(event2 -> {
+                        juur.getChildren().clear();
+                        juur.getChildren().addAll(iv2, ring, exitNupp, nimeTextField, vanuseTextField, nextNupp);
+                    });
+
+                } else if (!onPiisavVanus(tf2.getText())) {
+                    tf2.setText("Vanusepiirang on 21");  //kui vanus pole piisav siis lahter täitub vastava tekstiga
+                } else if (tf1.getText().equals("Nimi") || tf1.getText().equals("") ||
+                        tf1.getText().equals("Palun sisesta nimi!") || tf1.getText().length()>12) {
+                    if (tf1.getText().equals("Nimi") || tf1.getText().equals("") ||
+                            tf1.getText().equals("Palun sisesta nimi!")){
+                        tf1.setText("Palun sisesta nimi!"); //kui tühi nimelahter siis lahter täitub vastava tekstiga
+                    }
+                    else if (tf1.getText().length()>12) { //lubatud kuni 12 tähemärki
+                        tf1.setText("Max 12 tähemärki!");
+                    }
+                }
+            });
+        });
+
         bingoNupp.setOnMouseClicked(event -> {
             BingoGUI bingoGUI = null;
             try {
-                bingoGUI = new BingoGUI(stseen);
+                bingoGUI = new BingoGUI(stseen, mängija);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -130,15 +181,6 @@ public class KasiinoMängGUI extends Application {
             stseen.setRoot(bingoRoot);
         });
 
-        //blackjack alusta mängu
-        Pane blackjackNupp = getMänguLogo(blacjackLogo, "Black-\njack");
-        blackjackNupp.setLayoutX((stseen.getWidth() / 6) + 300);
-        blackjackNupp.setLayoutY(stseen.getHeight() / 2 - 100);
-
-        //slot machine alusta mängu
-        Pane slotmachineNupp = getMänguLogo(slotMachineLogo, "Slot\nMachine");
-        slotmachineNupp.setLayoutX((stseen.getWidth() / 6) + 600);
-        slotmachineNupp.setLayoutY(stseen.getHeight() / 2 - 100);
         slotmachineNupp.setOnMouseClicked(event -> {
             SlotGUI slotMäng = null;
             try {
@@ -149,29 +191,6 @@ public class KasiinoMängGUI extends Application {
             Group slotRoot = slotMäng.start();
             slotRoot.getChildren().addAll(exitNupp, menuNupp);
             stseen.setRoot(slotRoot);
-        });
-
-
-        //mängu interaktiivsus hakkab siit
-        playNupp.setOnMouseClicked(event -> {
-            juur.getChildren().clear(); //kui play nuppu vajutada, tühjendab juure ja lisab uuesti vajalikud asjad
-            juur.getChildren().addAll(iv2, ring, exitNupp, nimeTextField, vanuseTextField, nextNupp);
-            nextNupp.setOnMouseClicked(event1 -> {
-                //kontrollib vanust ja et nime lahter ei oleks tühi
-                if (onPiisavVanus(tf2.getText()) && !tf1.getText().equals("Nimi") && !tf1.getText().equals("") &&
-                        !tf1.getText().equals("Palun sisesta nimi!")) {
-                    juur.getChildren().clear();
-                    juur.getChildren().addAll(iv2, bingoNupp, blackjackNupp, slotmachineNupp, exitNupp, backNupp);
-                    backNupp.setOnMouseClicked(event2 -> {
-                        juur.getChildren().clear();
-                        juur.getChildren().addAll(iv2, ring, exitNupp, nimeTextField, vanuseTextField, nextNupp);
-                    });
-                } else if (!onPiisavVanus(tf2.getText())) {
-                    tf2.setText("Vanusepiirang on 21");  //kui vanus pole piisav siis lahter täitub vastava tekstiga
-                } else if (tf1.getText().equals("Nimi") || tf1.getText().equals("") || tf1.getText().equals("Palun sisesta nimi!")) {
-                    tf1.setText("Palun sisesta nimi!"); //kui tühi nimelahter siis lahter täitub vastava tekstiga
-                }
-            });
         });
     }
 
@@ -258,26 +277,26 @@ public class KasiinoMängGUI extends Application {
 
     private Pane getMänguLogo(String logoP, String nimi) {
         Pane pane = new StackPane();
-        Rectangle rect = new Rectangle(200, 200);
+        Rectangle rect = new Rectangle(250, 250);
         rect.setFill(Color.rgb(45, 65, 70));
         rect.setOpacity(0.7);
         rect.setStroke(Color.WHITE);
 
         Image logo = new Image(logoP);
         ImageView iv = new ImageView(logo);
-        iv.setFitWidth(200);
-        iv.setFitHeight(200);
+        iv.setFitWidth(250);
+        iv.setFitHeight(250);
 
         Text text = new Text();
         text.setFill(Color.WHITE);
         text.setText(nimi);
-        text.setFont(megrim50);
+        text.setFont(megrim65);
         text.setTextAlignment(TextAlignment.CENTER);
 
         pane.getChildren().addAll(iv, rect, text);
 
-        pane.setOnMouseEntered(event -> rect.setFill(Color.rgb(53, 69, 73)));
-        pane.setOnMouseExited(event -> rect.setFill(Color.rgb(45, 65, 70)));
+        pane.setOnMouseEntered(event -> rect.setOpacity(0.3));
+        pane.setOnMouseExited(event -> rect.setOpacity(0.7));
 
         return pane;
     }

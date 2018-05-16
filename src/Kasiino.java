@@ -1,10 +1,9 @@
 import bingo.Bingo;
-import blackjack.BlackjackLoogika;
 import slot_machine.Mänguautomaat;
 
 import java.util.Arrays;
 import java.util.Scanner;
-
+/*
 public class Kasiino {
     public static void main(String[] args) throws InterruptedException {
         boolean onPiisavVanus = true;
@@ -72,7 +71,7 @@ public class Kasiino {
             } else if (valik.equals("blackjack")) {
                 BlackjackLoogika blackjack = new BlackjackLoogika(mängija.getNimi(), mängija.getRaha());
                 blackjack.alustaMängu();
-            }*/
+            }
 
             //kasiinost lahkumise osa
             ValikVastusegaKüsimus küsimus2 = new ValikVastusegaKüsimus("Kas soovid ka kasiinost lahkuda?",
@@ -88,4 +87,6 @@ public class Kasiino {
         }
         sc.close(); //sulgeb skänneri
     }
-}
+
+
+}*/
