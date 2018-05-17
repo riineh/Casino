@@ -1,53 +1,35 @@
 package bingo;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Bingo {
+    private BingoPilet pilet1;
+    private BingoPilet pilet2;
+
+    public Bingo(BingoPilet pilet1) throws FileNotFoundException {
+        this.pilet1 = pilet1;
+    }
+
+    public Bingo(BingoPilet pilet1, BingoPilet pilet2) throws FileNotFoundException {
+        this.pilet1 = pilet1;
+        this.pilet2 = pilet2;
+    }
+
+
+
+    /*
     private int võit;
     private int võiduSumma;
-    private boolean lahku = false;
-
-    public boolean getLahku() {
-        return lahku;
-    }
 
     public int getVõiduSumma() {
         return võiduSumma;
     }
 
-    public void mängi(Scanner sc) throws InterruptedException {
-        String sisend;
-        System.out.println("Tere tulemast!");
-        System.out.println("Bingo koosneb kolmest osast: nurkademängust (võidusumaa: 20€), " +
-                "diagonaalidemängust (võidusumma: 50€) ja täismängust (võidusumma (150€).\n" +
-                "Nurkademängus loositakse 40 numbrit. Võitmiseks, tuleb saada täis kõik 4 nurka.\n" +
-                "Diagonaalidemängus loositakse veel 17 numbrit. Selle vooru võitmiseks tuleb saada täis mõlemad diagonaalid.\n" +
-                "Täismängus loositkse viimased 15 numbrit. Võitmiseks tuleb saada täis kõik mänguvälja ruudud.\n" +
-                "P.S Täidetud ruutu tähistab sümbol \"0\"");
-        System.out.println("---------------------");
-        System.out.println("Bingo pileti hind 10€");
-        System.out.println();
-        System.out.println("- Pileti ostmiseks sisesta: \"osta\"");
-        System.out.println("- Mängust lahkumiseks sisesta: \"lahku\"");
-        while (true) {
-            sisend = sc.nextLine();
-            if (sisend.equals("osta")){
-                mäng();
-                võiduSumma -= 10;
-                break;
-            }
-            else if (sisend.equals("lahku")){
-                lahku = true;
-                break;
-            }
-            else {
-                System.out.println("Palun tee õige valik!");
-            }
-        }
-    }
     public void mäng() throws InterruptedException {
+
         BingoPilet pilet = new BingoPilet();
         võiduSumma = 0;
         int aeg = 1000;
@@ -134,4 +116,5 @@ public class Bingo {
             pilet.kontrolli(loositud);
         }
     }
+    */
 }

@@ -1,10 +1,9 @@
 import bingo.Bingo;
-import blackjack.BlackjackLoogika;
 import slot_machine.Mänguautomaat;
 
 import java.util.Arrays;
 import java.util.Scanner;
-
+/*
 public class Kasiino {
     public static void main(String[] args) throws InterruptedException {
         boolean onPiisavVanus = true;
@@ -43,6 +42,7 @@ public class Kasiino {
             String valik = küsimus.küsiVastus(sc);    //mängijalt küsitakse eelnevalt loodud küsimus ning tagastatakse vastus
 
             //bingo mängu if haru
+            /*
             if (valik.equals("bingo")) {
                 while (true) {    //mäng on tsükklis selleks, et mängija ei peaks vahepeal uuesti kasiino menüüsse tagasi tulema
                     Bingo mäng = new Bingo();    //loob uue bingo mängu
@@ -87,4 +87,6 @@ public class Kasiino {
         }
         sc.close(); //sulgeb skänneri
     }
-}
+
+
+}*/
