@@ -4,7 +4,9 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -26,20 +28,20 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 
 public class SlotGUI  {
 
-    int panus;
+    public int panus;
+    public int võit = 0;
 
     private int kõrgus = 700;
     private int laius = 1200;
 
     private String logoPath = "file:casinoLogo.jpg";
     private String logoPath2 = "file:casinoLogoIlma.jpg";
+    private String logoPath3 = "file:slotmachinetaust.jpg";
     private String slotid = "file:Seven-icon.png";
     private String slotid2 = "file:Cherry-icon.png";
     private String slotid3 = "file:Banana-icon.png";
@@ -49,10 +51,15 @@ public class SlotGUI  {
     private Font megrim35 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),35);
     private Font megrim50 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),50);
     private Font megrim22 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),22);
-    private Scene stseen;
 
-    public SlotGUI(Scene stseen) throws FileNotFoundException {
+    private Scene stseen;
+    private Pane exitNupp;
+    private Pane menuNupp;
+
+    public SlotGUI(Scene stseen, Pane exit, Pane menu) throws FileNotFoundException {
         this.stseen = stseen;
+        this.exitNupp = exit;
+        this.menuNupp = menu;
     }
 
 
@@ -86,6 +93,7 @@ public class SlotGUI  {
     public Group start() {
         Group juur = new Group();
         ImageView iv2 = looTaust(logoPath2, stseen);
+        ImageView iv3 = looTaust(logoPath3, stseen);
 
         //esimese sloti ikoonid
         ImageView slot = slot(slotid, stseen);
@@ -214,7 +222,91 @@ public class SlotGUI  {
         list3.add(slot17);
         list3.add(slot18);
 
-        juur.getChildren().add(iv2);
+        //neljanda sloti ikoonid
+        ImageView slot19 = slot(slotid, stseen);
+        ImageView slot20= slot(slotid2, stseen);
+        ImageView slot21 = slot(slotid3, stseen);
+        ImageView slot22 = slot(slotid4, stseen);
+        ImageView slot23 = slot(slotid5, stseen);
+        ImageView slot24 = slot(slotid6, stseen);
+        //neljanda sloti ikoonide suurused
+        slot19.setFitWidth(125);
+        slot19.setFitHeight(125);
+        slot20.setFitHeight(125);
+        slot20.setFitWidth(125);
+        slot21.setFitWidth(125);
+        slot21.setFitHeight(125);
+        slot22.setFitWidth(125);
+        slot22.setFitHeight(125);
+        slot23.setFitWidth(125);
+        slot23.setFitHeight(125);
+        slot24.setFitHeight(125);
+        slot24.setFitWidth(125);
+        //neljanda sloti ikoonide asukohad
+        slot19.setLayoutX(40);
+        slot19.setLayoutY(190);
+        slot20.setLayoutY(190);
+        slot20.setLayoutX(40);
+        slot21.setLayoutY(190);
+        slot21.setLayoutX(40);
+        slot22.setLayoutY(190);
+        slot22.setLayoutX(40);
+        slot23.setLayoutY(190);
+        slot23.setLayoutX(40);
+        slot24.setLayoutY(190);
+        slot24.setLayoutX(40);
+        //neljanda sloti ikoonide list
+        List<ImageView> list4 = new ArrayList<>();
+        list4.add(slot19);
+        list4.add(slot20);
+        list4.add(slot21);
+        list4.add(slot22);
+        list4.add(slot23);
+        list4.add(slot24);
+
+        //viienda sloti ikoonid
+        ImageView slot25 = slot(slotid, stseen);
+        ImageView slot26= slot(slotid2, stseen);
+        ImageView slot27 = slot(slotid3, stseen);
+        ImageView slot28 = slot(slotid4, stseen);
+        ImageView slot29 = slot(slotid5, stseen);
+        ImageView slot30 = slot(slotid6, stseen);
+        //viienda sloti ikoonide suurused
+        slot25.setFitWidth(125);
+        slot25.setFitHeight(125);
+        slot26.setFitHeight(125);
+        slot26.setFitWidth(125);
+        slot27.setFitWidth(125);
+        slot27.setFitHeight(125);
+        slot28.setFitWidth(125);
+        slot28.setFitHeight(125);
+        slot29.setFitWidth(125);
+        slot29.setFitHeight(125);
+        slot30.setFitHeight(125);
+        slot30.setFitWidth(125);
+        //viienda sloti ikoonide asukohad
+        slot25.setLayoutX(835);
+        slot25.setLayoutY(190);
+        slot26.setLayoutY(190);
+        slot26.setLayoutX(835);
+        slot27.setLayoutY(190);
+        slot27.setLayoutX(835);
+        slot28.setLayoutY(190);
+        slot28.setLayoutX(835);
+        slot29.setLayoutY(190);
+        slot29.setLayoutX(835);
+        slot30.setLayoutY(190);
+        slot30.setLayoutX(835);
+        //viienda sloti ikoonide list
+        List<ImageView> list5 = new ArrayList<>();
+        list5.add(slot25);
+        list5.add(slot26);
+        list5.add(slot27);
+        list5.add(slot28);
+        list5.add(slot29);
+        list5.add(slot30);
+
+        juur.getChildren().add(iv3);
 
         Pane ring = getAndmedKüsida();
         ring.setLayoutX(stseen.getWidth()/2-laius/4);
@@ -235,6 +327,26 @@ public class SlotGUI  {
         slotruut3.setLayoutX(700);
         slotruut3.setLayoutY(200);
 
+        Pane slotruut4 = slotruut();
+        slotruut4.setLayoutX(105);
+        slotruut4.setLayoutY(200);
+
+        Pane slotruut5 = slotruut();
+        slotruut5.setLayoutX(305);
+        slotruut5.setLayoutY(200);
+
+        Pane slotruut6 = slotruut();
+        slotruut6.setLayoutX(505);
+        slotruut6.setLayoutY(200);
+
+        Pane slotruut7 = slotruut();
+        slotruut7.setLayoutX(705);
+        slotruut7.setLayoutY(200);
+
+        Pane slotruut8 = slotruut();
+        slotruut8.setLayoutX(905);
+        slotruut8.setLayoutY(200);
+
         Pane startnupp = start("START");
         startnupp.setLayoutY(520);
         startnupp.setLayoutX(525);
@@ -254,6 +366,10 @@ public class SlotGUI  {
         nimeTextField.getChildren().add(tf1);
         nimeTextField.setLayoutX(485);
         nimeTextField.setLayoutY(415);
+        try {
+            this.panus = Integer.parseInt(tf1.getText());
+        } catch (Exception e){}
+
 
         Pane playNupp = getVäikeNupp("Play");
         playNupp.setLayoutX((stseen.getWidth()/2)-(115/2));
@@ -266,69 +382,222 @@ public class SlotGUI  {
 
         playNupp.setOnMouseClicked(event -> {
             juur.getChildren().clear();
-            juur.getChildren().addAll(iv2, ruut1, ruut2);
+            juur.getChildren().addAll(iv3, ruut1, ruut2, menuNupp, exitNupp);
         });
 
         ruut1.setOnMouseClicked(event -> {juur.getChildren().clear();
-            juur.getChildren().addAll(iv2, ruut,slotruut1, slotruut2, slotruut3, startnupp);
-        });
+            juur.getChildren().addAll(iv3, ruut,slotruut1, slotruut2, slotruut3, startnupp, menuNupp, exitNupp);
 
+            startnupp.setOnMouseClicked(event2 -> {
+                juur.getChildren().clear();
+                juur.getChildren().addAll(iv3, ruut,slotruut1, slotruut2, slotruut3, startnupp, menuNupp, exitNupp);
+                juur.getChildren().addAll(slot, slot2, slot3, slot4, slot5, slot6,
+                        slot7, slot8, slot9, slot10, slot11, slot12, slot13, slot14, slot15, slot16, slot17, slot18);
+                Collections.shuffle(list);
+                Collections.shuffle(list2);
+                Collections.shuffle(list3);
 
+                ArrayList<ImageView> tulemus1 = new ArrayList<>();
+                tulemus1.add(list.get(5));
+                tulemus1.add(list2.get(5));
+                tulemus1.add(list3.get(5));
 
-        startnupp.setOnMouseClicked(event -> {
-            juur.getChildren().clear();
-            juur.getChildren().addAll(iv2, ruut,slotruut1, slotruut2, slotruut3, startnupp);
-            juur.getChildren().addAll(slot, slot2, slot3, slot4, slot5, slot6,
-                    slot7, slot8, slot9, slot10, slot11, slot12, slot13, slot14, slot15, slot16, slot17, slot18);
-            Collections.shuffle(list);
-            Collections.shuffle(list2);
-            Collections.shuffle(list3);
-            for (int i = 0; i < 6; i++) {
-                if (i == 5) {
-                    FadeTransition ft = new FadeTransition(Duration.millis(100 *i+1), list.get(i));
-                    ft.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
-                    ft.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
-                    ft.setCycleCount(8); // lõpmatu tsüklite arv
-                    ft.setAutoReverse(true); // lõppu jõudes tagasi, algusest jälle edasi
-                    ft.play();
-
-                    FadeTransition ft2 = new FadeTransition(Duration.millis(100 *i+1), list2.get(i));
-                    ft2.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
-                    ft2.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
-                    ft2.setCycleCount(8); // lõpmatu tsüklite arv
-                    ft2.setAutoReverse(true); // lõppu jõudes tagasi, algusest jälle edasi
-                    ft2.play();
-
-                    FadeTransition ft3 = new FadeTransition(Duration.millis(100 *i+1), list3.get(i));
-                    ft3.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
-                    ft3.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
-                    ft3.setCycleCount(8); // lõpmatu tsüklite arv
-                    ft3.setAutoReverse(true); // lõppu jõudes tagasi, algusest jälle edasi
-                    ft3.play();
-                } else {
-                    FadeTransition ft = new FadeTransition(Duration.millis(100 *i+1), list.get(i));
-                    ft.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
-                    ft.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
-                    ft.setCycleCount(8); // lõpmatu tsüklite arv
-                    ft.setAutoReverse(false); // lõppu jõudes tagasi, algusest jälle edasi
-                    ft.play();
-
-                    FadeTransition ft2 = new FadeTransition(Duration.millis(100 *i+1), list2.get(i));
-                    ft2.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
-                    ft2.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
-                    ft2.setCycleCount(8); // lõpmatu tsüklite arv
-                    ft2.setAutoReverse(false); // lõppu jõudes tagasi, algusest jälle edasi
-                    ft2.play();
-
-                    FadeTransition ft3 = new FadeTransition(Duration.millis(100 *i+1), list3.get(i));
-                    ft3.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
-                    ft3.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
-                    ft3.setCycleCount(8); // lõpmatu tsüklite arv
-                    ft3.setAutoReverse(false); // lõppu jõudes tagasi, algusest jälle edasi
-                    ft3.play();
+                Set<ImageView> set = new HashSet<>(tulemus1);
+                System.out.println(set.size());
+                if (set.size() == 1) { //kõik pildid on samad
+                    võit = panus*10;
+                } else if (set.size() == 2) { //kaks pilti on samad
+                    võit = panus*5;
+                } else { //ükski ei klapi
+                    võit = 0;
                 }
-            }
+
+                Pane võit1 = võidusumma("Võidusumma");
+                võit1.setLayoutX(475);
+                võit1.setLayoutY(125);
+                juur.getChildren().add(võit1);
+
+                võit1.setOnMouseClicked(event1 -> {
+                    juur.getChildren().remove(võit1);
+                    Pane võit2 = võidusumma(""+ võit);
+                    võit2.setLayoutY(125);
+                    võit2.setLayoutX(475);
+                    juur.getChildren().add(võit2);
+
+                });
+
+                for (int i = 0; i < 6; i++) {
+                    if (i == 5) {
+                        FadeTransition ft = new FadeTransition(Duration.millis(100 *i+1), list.get(i));
+                        ft.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                        ft.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                        ft.setCycleCount(8); // lõpmatu tsüklite arv
+                        ft.setAutoReverse(true); // lõppu jõudes tagasi, algusest jälle edasi
+                        ft.play();
+
+                        FadeTransition ft2 = new FadeTransition(Duration.millis(100 *i+1), list2.get(i));
+                        ft2.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                        ft2.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                        ft2.setCycleCount(8); // lõpmatu tsüklite arv
+                        ft2.setAutoReverse(true); // lõppu jõudes tagasi, algusest jälle edasi
+                        ft2.play();
+
+                        FadeTransition ft3 = new FadeTransition(Duration.millis(100 *i+1), list3.get(i));
+                        ft3.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                        ft3.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                        ft3.setCycleCount(8); // lõpmatu tsüklite arv
+                        ft3.setAutoReverse(true); // lõppu jõudes tagasi, algusest jälle edasi
+                        ft3.play();
+                    } else {
+                        FadeTransition ft = new FadeTransition(Duration.millis(100 *i+1), list.get(i));
+                        ft.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                        ft.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                        ft.setCycleCount(8); // lõpmatu tsüklite arv
+                        ft.setAutoReverse(false); // lõppu jõudes tagasi, algusest jälle edasi
+                        ft.play();
+
+                        FadeTransition ft2 = new FadeTransition(Duration.millis(100 *i+1), list2.get(i));
+                        ft2.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                        ft2.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                        ft2.setCycleCount(8); // lõpmatu tsüklite arv
+                        ft2.setAutoReverse(false); // lõppu jõudes tagasi, algusest jälle edasi
+                        ft2.play();
+
+                        FadeTransition ft3 = new FadeTransition(Duration.millis(100 *i+1), list3.get(i));
+                        ft3.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                        ft3.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                        ft3.setCycleCount(8); // lõpmatu tsüklite arv
+                        ft3.setAutoReverse(false); // lõppu jõudes tagasi, algusest jälle edasi
+                        ft3.play();
+
+                    }
+                }
+            });
         });
+
+        ruut2.setOnMouseClicked(event -> { juur.getChildren().clear();
+            juur.getChildren().addAll(iv3, ruut,slotruut4, slotruut5, slotruut6, slotruut7, slotruut8, startnupp, menuNupp, exitNupp);
+
+            startnupp.setOnMouseClicked(event2 -> {
+                juur.getChildren().clear();
+                juur.getChildren().addAll(iv3, ruut,slotruut4, slotruut5, slotruut6, slotruut7, slotruut8, startnupp, menuNupp, exitNupp);
+                juur.getChildren().addAll(slot, slot2, slot3, slot4, slot5, slot6,
+                        slot7, slot8, slot9, slot10, slot11, slot12, slot13, slot14, slot15, slot16, slot17, slot18,
+                        slot19, slot20, slot21, slot22, slot23, slot24, slot25, slot26, slot27, slot28, slot29, slot30);
+                Collections.shuffle(list);
+                Collections.shuffle(list2);
+                Collections.shuffle(list3);
+                Collections.shuffle(list4);
+                Collections.shuffle(list5);
+
+                ArrayList<ImageView> tulemus = new ArrayList<>();
+                tulemus.add(list.get(5));
+                tulemus.add(list2.get(5));
+                tulemus.add(list3.get(5));
+                tulemus.add(list4.get(5));
+                tulemus.add(list5.get(5));
+
+                Set<ImageView> set = new HashSet<>(tulemus);
+                if (set.size() == 1) { //kõik pildid on samad
+                    võit=  panus*5;
+                } else if (set.size() == 2) { //kolmik ja paar või neli ühesugust pilti
+                    võit=  panus*3;
+                } else if (set.size() == 3) { //kolm pilti on samad või kaks paari
+                    võit =  panus*2;
+                } else { //ükski ei klapi
+                    võit = 0;
+                }
+
+                Pane võit1 = võidusumma("Võidusumma");
+                võit1.setLayoutX(475);
+                võit1.setLayoutY(125);
+                juur.getChildren().add(võit1);
+
+                võit1.setOnMouseClicked(event1 -> {
+                    juur.getChildren().remove(võit1);
+                    Pane võit2 = võidusumma(""+ võit);
+                    võit2.setLayoutY(125);
+                    võit2.setLayoutX(475);
+                    juur.getChildren().add(võit2);
+
+                });
+
+                for (int i = 0; i < 6; i++) {
+                    if (i == 5) {
+                        FadeTransition ft = new FadeTransition(Duration.millis(100 *i+1), list.get(i));
+                        ft.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                        ft.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                        ft.setCycleCount(8); // lõpmatu tsüklite arv
+                        ft.setAutoReverse(true); // lõppu jõudes tagasi, algusest jälle edasi
+                        ft.play();
+
+                        FadeTransition ft2 = new FadeTransition(Duration.millis(100 *i+1), list2.get(i));
+                        ft2.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                        ft2.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                        ft2.setCycleCount(8); // lõpmatu tsüklite arv
+                        ft2.setAutoReverse(true); // lõppu jõudes tagasi, algusest jälle edasi
+                        ft2.play();
+
+                        FadeTransition ft3 = new FadeTransition(Duration.millis(100 *i+1), list3.get(i));
+                        ft3.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                        ft3.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                        ft3.setCycleCount(8); // lõpmatu tsüklite arv
+                        ft3.setAutoReverse(true); // lõppu jõudes tagasi, algusest jälle edasi
+                        ft3.play();
+
+                        FadeTransition ft4 = new FadeTransition(Duration.millis(100 *i+1), list4.get(i));
+                        ft4.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                        ft4.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                        ft4.setCycleCount(8); // lõpmatu tsüklite arv
+                        ft4.setAutoReverse(true); // lõppu jõudes tagasi, algusest jälle edasi
+                        ft4.play();
+
+                        FadeTransition ft5 = new FadeTransition(Duration.millis(100 *i+1), list5.get(i));
+                        ft5.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                        ft5.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                        ft5.setCycleCount(8); // lõpmatu tsüklite arv
+                        ft5.setAutoReverse(true); // lõppu jõudes tagasi, algusest jälle edasi
+                        ft5.play();
+                    } else {
+                        FadeTransition ft = new FadeTransition(Duration.millis(100 *i+1), list.get(i));
+                        ft.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                        ft.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                        ft.setCycleCount(8); // lõpmatu tsüklite arv
+                        ft.setAutoReverse(false); // lõppu jõudes tagasi, algusest jälle edasi
+                        ft.play();
+
+                        FadeTransition ft2 = new FadeTransition(Duration.millis(100 *i+1), list2.get(i));
+                        ft2.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                        ft2.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                        ft2.setCycleCount(8); // lõpmatu tsüklite arv
+                        ft2.setAutoReverse(false); // lõppu jõudes tagasi, algusest jälle edasi
+                        ft2.play();
+
+                        FadeTransition ft3 = new FadeTransition(Duration.millis(100 *i+1), list3.get(i));
+                        ft3.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                        ft3.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                        ft3.setCycleCount(8); // lõpmatu tsüklite arv
+                        ft3.setAutoReverse(false); // lõppu jõudes tagasi, algusest jälle edasi
+                        ft3.play();
+
+                        FadeTransition ft4 = new FadeTransition(Duration.millis(100 *i+1), list4.get(i));
+                        ft4.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                        ft4.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                        ft4.setCycleCount(8); // lõpmatu tsüklite arv
+                        ft4.setAutoReverse(false); // lõppu jõudes tagasi, algusest jälle edasi
+                        ft4.play();
+
+                        FadeTransition ft5 = new FadeTransition(Duration.millis(100 *i+1), list5.get(i));
+                        ft5.setFromValue(1.0);  // määratakse algväärtus (1.0 - täiesti selge)
+                        ft5.setToValue(0.0); // määratakse lõppväärtus (0 - täiesti haihtunud)
+                        ft5.setCycleCount(8); // lõpmatu tsüklite arv
+                        ft5.setAutoReverse(false); // lõppu jõudes tagasi, algusest jälle edasi
+                        ft5.play();
+                    }
+                }
+            });
+        });
+
         return juur;
     }
 
@@ -354,7 +623,7 @@ public class SlotGUI  {
         text.setText("Tere tulemast!\n\n" + "Kas soovid mängida " +
                 "kolmese või viiese automaadiga? \n" +
                 "Kolmesega mängides on võiduvõimalused väiksemad, \n aga võidusummad suuremad, kui viiese mänguautomaadiga \n mängides. \n" +
-        "Sisesta [3] või [5] vastava automaadiga mängimiseks. \n Tee oma valik: \n\n\n\n");
+        " \n Tee oma panus: \n\n\n\n");
         text.setFont(megrim22);
         text.setTextAlignment(TextAlignment.CENTER);
 
@@ -367,7 +636,7 @@ public class SlotGUI  {
     private Pane getVäikeNupp(String tekst){
         Pane pane = new StackPane();
         Rectangle rect = new Rectangle(115, 50);
-        rect.setFill(Color.rgb(45, 65, 70));
+        rect.setFill(Color.RED);
         rect.setStroke(Color.WHITE);
 
         Text text = new Text();
@@ -378,16 +647,38 @@ public class SlotGUI  {
         pane.getChildren().addAll(rect, text);
         pane.setOpacity(0.8);
 
-        pane.setOnMouseEntered(event -> rect.setFill(Color.rgb(53, 69, 73)));
-        pane.setOnMouseExited(event -> rect.setFill(Color.rgb(45, 65, 70)));
+        pane.setOnMouseEntered(event -> rect.setFill(Color.rgb(225, 72, 72)));
+        pane.setOnMouseExited(event -> rect.setFill(Color.RED));
 
         return pane;
     }
 
+    private Pane võidusumma(String tekst){
+        Pane pane = new StackPane();
+        Rectangle rect = new Rectangle(250, 50);
+        rect.setFill(Color.RED);
+        rect.setStroke(Color.WHITE);
+
+        Text text = new Text();
+        text.setFill(Color.WHITE);
+        text.setText(tekst);
+        text.setFont(megrim35);
+
+        pane.getChildren().addAll(rect, text);
+        pane.setOpacity(0.8);
+
+        pane.setOnMouseEntered(event -> rect.setFill(Color.rgb(225, 72, 72)));
+        pane.setOnMouseExited(event -> rect.setFill(Color.RED));
+
+        return pane;
+    }
+
+
+
     private Pane start(String tekst){
         Pane pane = new StackPane();
         Rectangle rect = new Rectangle(140, 60);
-        rect.setFill(Color.rgb(160, 00, 00));
+        rect.setFill(Color.RED);
         rect.setStroke(Color.WHITE);
 
         Text text = new Text();
@@ -398,8 +689,8 @@ public class SlotGUI  {
         pane.getChildren().addAll(rect, text);
         pane.setOpacity(0.95);
 
-        pane.setOnMouseEntered(event -> rect.setFill(Color.rgb(160, 10, 20)));
-        pane.setOnMouseExited(event -> rect.setFill(Color.rgb(160, 00, 00)));
+        pane.setOnMouseEntered(event -> rect.setFill(Color.rgb(255, 72, 72)));
+        pane.setOnMouseExited(event -> rect.setFill(Color.RED));
 
         return pane;
     }
@@ -429,10 +720,12 @@ public class SlotGUI  {
 
     }
 
+
+
     private Pane getRuutTekstiga(String arv) {
         Pane pane = new StackPane();
         Rectangle rect = new Rectangle(200, 200);
-        rect.setFill(Color.rgb(45, 65, 70));
+        rect.setFill(Color.RED);
         rect.setStroke(Color.WHITE);
 
 
@@ -445,8 +738,30 @@ public class SlotGUI  {
         pane.getChildren().addAll(rect, text);
         pane.setOpacity(0.8);
 
-        pane.setOnMouseEntered(event -> rect.setFill(Color.rgb(53, 69, 73)));
-        pane.setOnMouseExited(event -> rect.setFill(Color.rgb(45, 65, 70)));
+        pane.setOnMouseEntered(event -> rect.setFill(Color.rgb(225, 72, 72)));
+        pane.setOnMouseExited(event -> rect.setFill(Color.RED));
+
+        return pane;
+    }
+
+
+    private Pane võiduruut(String arv) {
+        Pane pane = new StackPane();
+        Rectangle rect = new Rectangle(600, 200);
+        rect.setFill(Color.RED);
+        rect.setStroke(Color.WHITE);
+
+        Text text = new Text();
+        text.setFill(Color.WHITE);
+        text.setText(arv);
+        text.setFont(megrim35);
+        text.setTextAlignment(TextAlignment.CENTER);
+
+        pane.getChildren().addAll(rect, text);
+        pane.setOpacity(0.8);
+
+        pane.setOnMouseEntered(event -> rect.setFill(Color.rgb(225, 72, 72)));
+        pane.setOnMouseExited(event -> rect.setFill(Color.RED));
 
         return pane;
     }
