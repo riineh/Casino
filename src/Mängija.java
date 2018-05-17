@@ -19,9 +19,15 @@ public class Mängija {
     private String profiil = "file:profiil2.png";
     private Font megrim27 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),27);
 
-    public Mängija(String nimi, int vanus) throws FileNotFoundException {  //isendi loomiseks on vaja ainult nime ja vanust
+    public Mängija(String nimi, int vanus, int raha) throws FileNotFoundException {
         this.nimi = nimi;
         this.vanus = vanus;
+        this.raha = raha;
+    }
+
+    @Override
+    public String toString() {
+        return nimi + ": " + raha + "€";
     }
 
     public Pane getProfiiliPane() {
@@ -32,7 +38,6 @@ public class Mängija {
         ImageView iv = new ImageView(logo);
         iv.setFitWidth(250);
         iv.setFitHeight(90);
-        iv.setOpacity(0.6);
 
         Text text = new Text();
         text.setFill(Color.BLACK);
@@ -41,6 +46,7 @@ public class Mängija {
         text.setTextAlignment(TextAlignment.RIGHT);
 
         pane.getChildren().addAll(iv, text);
+        pane.setOpacity(0.9);
 
         return pane;
     }
@@ -52,6 +58,8 @@ public class Mängija {
     public int getRaha() {
         return raha;
     }
+
+    public int getVanus() { return vanus; }
 
     public void setRaha(int raha) {  //selleks, et määrata mängijale alguses kindel raha summa
         this.raha = raha;

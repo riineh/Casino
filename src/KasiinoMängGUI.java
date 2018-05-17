@@ -1,11 +1,13 @@
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -17,6 +19,8 @@ import javafx.scene.control.TextField;
 import slot_machine.SlotGUI;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class KasiinoMängGUI extends Application {
     private String logoPath = "file:casinoLogo.jpg";
@@ -33,8 +37,9 @@ public class KasiinoMängGUI extends Application {
     private int laius = 1200;
 
     private Mängija mängija;
+    private List<Mängija> kõikMängijad = loeAndmed();
 
-    public KasiinoMängGUI() throws FileNotFoundException {
+    public KasiinoMängGUI() throws IOException {
     }
 
     public static void main(String[] args) {
@@ -55,12 +60,24 @@ public class KasiinoMängGUI extends Application {
         stage.setTitle("Casino");
         stage.show();
 
-        //exit nupp
+        //exit nupp salvestuseta
         Pane exitNupp = getSuurNupp("Exit");
         exitNupp.setLayoutX(laius - 200);
         exitNupp.setLayoutY(50);
         exitNupp.setOnMouseClicked(event -> Platform.exit());
         juur.getChildren().add(exitNupp);
+
+        //exit nupp salvestusega
+        Pane exitNupp2 = getSuurNupp("Exit");
+        exitNupp2.setLayoutX(laius - 200);
+        exitNupp2.setLayoutY(50);
+        exitNupp2.setOnMouseClicked(event -> {Platform.exit();
+            try {
+                salvestaAndmed(mängija);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         //play nupp
         Pane playNupp = getSuurNupp("Play");
@@ -69,7 +86,7 @@ public class KasiinoMängGUI extends Application {
         juur.getChildren().add(playNupp);
 
         //küsi andmed ring
-        Pane ring = getAndmedKüsida();
+        Pane ring = getAndmedKüsida("Tere tulemast\nkasiinosse U of T!\n\nPalun sisesta enda andmed:\n\n\n\n");
         ring.setLayoutX(stseen.getWidth() / 2 - laius / 4);
         ring.setLayoutY(stseen.getHeight() / 2 - laius / 4);
 
@@ -101,6 +118,11 @@ public class KasiinoMängGUI extends Application {
         nextNupp.setLayoutX((stseen.getWidth() / 2) - (115 / 2));
         nextNupp.setLayoutY(stseen.getHeight() / 2 + 175);
 
+        //vanad kasutajad nupp
+        Pane vanadKasutajadNupp = getVäikeNupp("Vali");
+        vanadKasutajadNupp.setLayoutX(stseen.getWidth() / 2 - 255);
+        vanadKasutajadNupp.setLayoutY(stseen.getHeight() / 2 + 60);
+
         //back nupp
         Pane backNupp = getSuurNupp("Back");
         backNupp.setLayoutX(50);
@@ -122,25 +144,68 @@ public class KasiinoMängGUI extends Application {
         slotmachineNupp.setLayoutY(stseen.getHeight() / 2 - 100);
 
         //mängu interaktiivsus hakkab siit
-        menuNupp.setOnMouseClicked(event1 -> {
+        backNupp.setOnMouseClicked(event -> {
+            juur.getChildren().clear();
+            juur.getChildren().addAll(iv2, ring, exitNupp, nimeTextField, vanuseTextField, nextNupp, vanadKasutajadNupp);
+        });
+
+        menuNupp.setOnMouseClicked(event -> {
             stseen.setRoot(juur);
             juur.getChildren().clear();
             Pane profiil = mängija.getProfiiliPane();
             profiil.setLayoutX(50);
             profiil.setLayoutY(stseen.getHeight()-150);
-            juur.getChildren().addAll(iv2, exitNupp, profiil, slotmachineNupp, bingoNupp, backNupp);
+            juur.getChildren().addAll(iv2, exitNupp2, profiil, slotmachineNupp, bingoNupp, backNupp);
+        });
+
+        vanadKasutajadNupp.setOnMouseClicked(event -> {
+            juur.getChildren().clear();
+            Rectangle ruut = new Rectangle(600, 600);
+            ruut.setFill(Color.rgb(45, 65, 70));
+            ruut.setOpacity(0.7);
+            ruut.setLayoutX(stseen.getWidth()/2 - 300);
+            ruut.setLayoutY(stseen.getHeight()/2 - 300);
+            juur.getChildren().addAll(iv2, exitNupp, backNupp, ruut);
+
+            GridPane grid = new GridPane();
+            grid.setLayoutX(stseen.getWidth()/2-255);
+            grid.setLayoutY(stseen.getHeight()/2 - (95*2.5));
+            grid.getColumnConstraints().add(new ColumnConstraints(255));
+            grid.getRowConstraints().add(new RowConstraints(95));
+            grid.setVgap(5);
+            grid.setHgap(5);
+            for (Mängija m: kõikMängijad){
+                Pane pane = m.getProfiiliPane();
+                pane.setOnMouseEntered(event1 -> pane.setOpacity(0.6));
+                pane.setOnMouseExited(event1 -> pane.setOpacity(0.9));
+                pane.setOnMouseClicked(event1 -> {
+                    mängija = m;
+                    kõikMängijad.remove(m);
+                    Pane profiil = mängija.getProfiiliPane();
+                    profiil.setLayoutX(50);
+                    profiil.setLayoutY(stseen.getHeight()-150);
+                    juur.getChildren().clear();
+                    juur.getChildren().addAll(iv2, bingoNupp, slotmachineNupp, exitNupp2, backNupp, profiil);
+                });
+                if (kõikMängijad.indexOf(m)<5){
+                    grid.add(pane, 0, kõikMängijad.indexOf(m));
+                }
+                else if (kõikMängijad.indexOf(m)<10 && kõikMängijad.indexOf(m) >= 5) {
+                    grid.add(pane, 1, (-5 + kõikMängijad.indexOf(m)));
+                }
+            }
+            juur.getChildren().add(grid);
         });
 
         playNupp.setOnMouseClicked(event -> {
             juur.getChildren().clear(); //kui play nuppu vajutada, tühjendab juure ja lisab uuesti vajalikud asjad
-            juur.getChildren().addAll(iv2, ring, exitNupp, nimeTextField, vanuseTextField, nextNupp);
+            juur.getChildren().addAll(iv2, ring, exitNupp, nimeTextField, vanuseTextField, nextNupp, vanadKasutajadNupp);
             nextNupp.setOnMouseClicked(event1 -> {
                 //kontrollib vanust ja et nime lahter ei oleks tühi
                 if (onPiisavVanus(tf2.getText()) && !tf1.getText().equals("Nimi") && !tf1.getText().equals("") &&
                         !tf1.getText().equals("Palun sisesta nimi!") && tf1.getText().length()<=12) {
                     try {
-                        mängija = new Mängija(tf1.getText(), Integer.parseInt(tf2.getText())); //loob uue mängija
-                        mängija.setRaha(200); //annab mängijale alustuseks 200 eurot
+                        mängija = new Mängija(tf1.getText(), Integer.parseInt(tf2.getText()), 200);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -148,12 +213,7 @@ public class KasiinoMängGUI extends Application {
                     profiil.setLayoutX(50);
                     profiil.setLayoutY(stseen.getHeight()-150);
                     juur.getChildren().clear();
-                    juur.getChildren().addAll(iv2, bingoNupp, slotmachineNupp, exitNupp, backNupp, profiil);
-                    backNupp.setOnMouseClicked(event2 -> {
-                        juur.getChildren().clear();
-                        juur.getChildren().addAll(iv2, ring, exitNupp, nimeTextField, vanuseTextField, nextNupp);
-                    });
-
+                    juur.getChildren().addAll(iv2, bingoNupp, slotmachineNupp, exitNupp2, backNupp, profiil);
                 } else if (!onPiisavVanus(tf2.getText())) {
                     tf2.setText("Vanusepiirang on 21");  //kui vanus pole piisav siis lahter täitub vastava tekstiga
                 } else if (tf1.getText().equals("Nimi") || tf1.getText().equals("") ||
@@ -177,7 +237,7 @@ public class KasiinoMängGUI extends Application {
                 e.printStackTrace();
             }
             Group bingoRoot = bingoGUI.getJuur();
-            bingoRoot.getChildren().addAll(exitNupp, menuNupp);
+            bingoRoot.getChildren().addAll(exitNupp2, menuNupp);
             stseen.setRoot(bingoRoot);
         });
 
@@ -189,7 +249,7 @@ public class KasiinoMängGUI extends Application {
                 e.printStackTrace();
             }
             Group slotRoot = slotMäng.start();
-            slotRoot.getChildren().addAll(exitNupp, menuNupp);
+            slotRoot.getChildren().addAll(exitNupp2, menuNupp);
             stseen.setRoot(slotRoot);
         });
     }
@@ -257,7 +317,7 @@ public class KasiinoMängGUI extends Application {
         return tf;
     }
 
-    private Pane getAndmedKüsida() {
+    private Pane getAndmedKüsida(String tekst) {
         Pane pane = new StackPane();
         Circle ring = new Circle();
         ring.setFill(Color.rgb(45, 65, 70));
@@ -265,7 +325,7 @@ public class KasiinoMängGUI extends Application {
 
         Text text = new Text();
         text.setFill(Color.WHITE);
-        text.setText("Tere tulemast\nkasiinosse U of T!\n\nPalun sisesta enda andmed:\n\n\n\n");
+        text.setText(tekst);
         text.setFont(megrim35);
         text.setTextAlignment(TextAlignment.CENTER);
 
@@ -313,5 +373,32 @@ public class KasiinoMängGUI extends Application {
             onPiisavVanus = false;
         }
         return onPiisavVanus;
+    }
+
+    private void salvestaAndmed(Mängija mängija) throws IOException {
+        List<Mängija> mängijad = kõikMängijad;
+        mängijad.add(mängija);
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("andmed.txt")))){
+            for (Mängija m: mängijad) {
+                bw.write(m.getNimi() + " " + m.getVanus() + " " + m.getRaha() + "\n");
+            }
+        }
+    }
+
+    private List<Mängija> loeAndmed() throws IOException {
+        List<Mängija> mängijad = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("andmed.txt"), "UTF-8"))){
+            String rida = reader.readLine();
+            while (true) {
+                try {
+                    String[] jupid = rida.split(" ");
+                    mängijad.add(new Mängija(jupid[0], Integer.parseInt(jupid[1]), Integer.parseInt(jupid[2])));
+                    rida = reader.readLine();
+                } catch (Exception e){
+                    break;
+                }
+            }
+        }
+        return mängijad;
     }
 }

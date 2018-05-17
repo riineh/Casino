@@ -1,11 +1,15 @@
 package bingo;
 
+import javafx.animation.PauseTransition;
+import javafx.animation.SequentialTransition;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,13 +36,6 @@ public class BingoPilet {
     private Color värv = värvid.get(suvalineVärv);
     private GridPane ruudustik = new GridPane();
 
-    public GridPane getRuudustik() {
-        return ruudustik;
-    }
-    public Color getVärv() {
-        return värv;
-    }
-
     public BingoPilet() throws FileNotFoundException {
         loosiPilet();
     }
@@ -56,6 +53,20 @@ public class BingoPilet {
         return bingoTabel;
     }
 
+    public void kontrolli(int loositudNumber){
+        for (int i=0; i<bingoTabel.size(); i++){
+            for (int j=0; j<bingoTabel.get(i).size(); j++){
+                if (bingoTabel.get(i).get(j) == loositudNumber) {
+                    this.bingoTabel.get(i).set(j,0);
+                    Rectangle rect = new Rectangle(43,43);
+                    rect.setFill(värv);
+                    rect.setOpacity(0.7);
+                    ruudustik.add(rect, i, j);
+                }
+            }
+        }
+    }
+
     public Pane drawBingoPilet() {
         StackPane pane = new StackPane();
 
@@ -71,7 +82,7 @@ public class BingoPilet {
         }
         for (int i=0; i<5; i++){
             for (int j=0; j<5; j++){
-                int number = this.getBingoTabel().get(i).get(j);
+                int number = getBingoTabel().get(i).get(j);
                 ruudustik.add(numbriRuut(numbriSuurus, ""+number),i,j);
             }
         }
@@ -100,20 +111,6 @@ public class BingoPilet {
         return ruut;
     }
 
-    public void kontrolli(int loositudNumber){
-        List<List<Integer>> bingoTabel = getBingoTabel();
-        for (int i=0; i<bingoTabel.size(); i++){
-            for (int j=0; j<bingoTabel.get(i).size(); j++){
-                if (bingoTabel.get(i).get(j) == loositudNumber) {
-                    Rectangle rect = new Rectangle(43,43);
-                    rect.setFill(värv);
-                    rect.setOpacity(0.7);
-                    ruudustik.add(rect, i, j);
-                    bingoTabel.get(i).set(j, 0);
-                }
-            }
-        }
-    }
     public boolean nurkademäng() {
         boolean nurkVõit = false;
         int nurk1 = bingoTabel.get(0).get(0);
