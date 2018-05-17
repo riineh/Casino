@@ -220,7 +220,7 @@ public class BingoGUI {
                             summa[0] += 150;
                         }
                     });
-                    Pane täismäng = getTextPane("Täisnmängu\n võit:\n\n", "\n" + võit[0] + "€");
+                    Pane täismäng = getTextPane("Täismängu\n võit:\n\n", "\n" + võit[0] + "€");
                     täismäng.setLayoutX(stseen.getWidth() - 400);
                     täismäng.setLayoutY(stseen.getHeight()/2-150);
                     Pane jätka3 = getVäikeNupp("Jätka");

@@ -147,6 +147,11 @@ public class KasiinoMängGUI extends Application {
         backNupp.setOnMouseClicked(event -> {
             juur.getChildren().clear();
             juur.getChildren().addAll(iv2, ring, exitNupp, nimeTextField, vanuseTextField, nextNupp, vanadKasutajadNupp);
+            try {
+                salvestaAndmed(mängija);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
         menuNupp.setOnMouseClicked(event -> {
