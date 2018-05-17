@@ -249,7 +249,7 @@ public class KasiinoMängGUI extends Application {
         slotmachineNupp.setOnMouseClicked(event -> {
             SlotGUI slotMäng = null;
             try {
-                slotMäng = new SlotGUI(stseen);
+                slotMäng = new SlotGUI(stseen, exitNupp, menuNupp);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
