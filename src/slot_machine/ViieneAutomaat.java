@@ -2,6 +2,7 @@ package slot_machine;
 
 import slot_machine.Loos;
 
+import javax.swing.text.html.ImageView;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
