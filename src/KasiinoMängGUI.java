@@ -1,10 +1,7 @@
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -16,7 +13,6 @@ import javafx.stage.Stage;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.control.TextField;
-import slot_machine.SlotGUI;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -249,7 +245,7 @@ public class KasiinoMängGUI extends Application {
         slotmachineNupp.setOnMouseClicked(event -> {
             SlotGUI slotMäng = null;
             try {
-                slotMäng = new SlotGUI(stseen, exitNupp2, menuNupp);
+                slotMäng = new SlotGUI(stseen, exitNupp2, menuNupp, mängija);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

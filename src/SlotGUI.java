@@ -1,5 +1,3 @@
-package slot_machine;
-
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.animation.Timeline;
@@ -55,11 +53,13 @@ public class SlotGUI  {
     private Scene stseen;
     private Pane exitNupp;
     private Pane menuNupp;
+    private Mängija mängija;
 
-    public SlotGUI(Scene stseen, Pane exit, Pane menu) throws FileNotFoundException {
+    public SlotGUI(Scene stseen, Pane exit, Pane menu, Mängija mängija) throws FileNotFoundException {
         this.stseen = stseen;
         this.exitNupp = exit;
         this.menuNupp = menu;
+        this.mängija = mängija;
     }
 
 
@@ -242,11 +242,17 @@ public class SlotGUI  {
 
         //neljanda sloti ikoonid
         ImageView slot19 = slot(slotid, stseen);
+        slot19.setId("seitse");
         ImageView slot20= slot(slotid2, stseen);
+        slot20.setId("kirsid");
         ImageView slot21 = slot(slotid3, stseen);
+        slot21.setId("banaan");
         ImageView slot22 = slot(slotid4, stseen);
+        slot22.setId("ploom");
         ImageView slot23 = slot(slotid5, stseen);
+        slot23.setId("bar");
         ImageView slot24 = slot(slotid6, stseen);
+        slot24.setId("sidrun");
         //neljanda sloti ikoonide suurused
         slot19.setFitWidth(125);
         slot19.setFitHeight(125);
@@ -284,11 +290,17 @@ public class SlotGUI  {
 
         //viienda sloti ikoonid
         ImageView slot25 = slot(slotid, stseen);
+        slot25.setId("seitse");
         ImageView slot26= slot(slotid2, stseen);
+        slot26.setId("kirsid");
         ImageView slot27 = slot(slotid3, stseen);
+        slot27.setId("banaan");
         ImageView slot28 = slot(slotid4, stseen);
+        slot28.setId("ploom");
         ImageView slot29 = slot(slotid5, stseen);
+        slot29.setId("bar");
         ImageView slot30 = slot(slotid6, stseen);
+        slot30.setId("sidrun");
         //viienda sloti ikoonide suurused
         slot25.setFitWidth(125);
         slot25.setFitHeight(125);
@@ -392,12 +404,14 @@ public class SlotGUI  {
 
         juur.getChildren().addAll(ring, playNupp, nimeTextField);
 
-
-
-
         playNupp.setOnMouseClicked(event -> {
-            juur.getChildren().clear();
-            juur.getChildren().addAll(iv3, ruut1, ruut2, menuNupp, exitNupp);
+            if (onSobivPanus(tf1.getText())) {
+                juur.getChildren().clear();
+                juur.getChildren().addAll(iv3, ruut1, ruut2, menuNupp, exitNupp);
+            } else {
+                tf1.setText("Sisesta õige panus:");
+            }
+
         });
 
         ruut1.setOnMouseClicked(event -> {juur.getChildren().clear();
@@ -416,8 +430,19 @@ public class SlotGUI  {
                 Collections.shuffle(list3);
 
 
-                if (list.get(5).getId().equals(list2.get(5).getId())) {
+                Set<String> set = new HashSet<>();
+                set.add(list.get(5).getId());
+                set.add(list2.get(5).getId());
+                set.add((list3.get(5).getId()));
+
+                if (set.size() == 1) { //kõik pildid on samad
+                    võit = võit + panus*10;
+                } else if (set.size() == 2) { //kaks pilti on samad
                     võit = võit + panus*3;
+                    System.out.println(panus);
+                    System.out.println(võit);
+                } else { //ükski ei klapi
+                    võit = võit + 0;
                 }
 
                 Pane võit1 = võidusumma("Võidusumma");
@@ -431,6 +456,7 @@ public class SlotGUI  {
                     võit2.setLayoutY(125);
                     võit2.setLayoutX(475);
                     juur.getChildren().add(võit2);
+                    mängija.setRaha(mängija.getRaha() + võit);
 
                 });
 
@@ -487,6 +513,9 @@ public class SlotGUI  {
             juur.getChildren().addAll(iv3, ruut,slotruut4, slotruut5, slotruut6, slotruut7, slotruut8, startnupp, menuNupp, exitNupp);
 
             startnupp.setOnMouseClicked(event2 -> {
+                try {
+                    this.panus = Integer.parseInt(tf1.getText());
+                } catch (Exception e){}
                 juur.getChildren().clear();
                 juur.getChildren().addAll(iv3, ruut,slotruut4, slotruut5, slotruut6, slotruut7, slotruut8, startnupp, menuNupp, exitNupp);
                 juur.getChildren().addAll(slot, slot2, slot3, slot4, slot5, slot6,
@@ -498,22 +527,21 @@ public class SlotGUI  {
                 Collections.shuffle(list4);
                 Collections.shuffle(list5);
 
-                ArrayList<ImageView> tulemus = new ArrayList<>();
-                tulemus.add(list.get(5));
-                tulemus.add(list2.get(5));
-                tulemus.add(list3.get(5));
-                tulemus.add(list4.get(5));
-                tulemus.add(list5.get(5));
+                Set<String> set = new HashSet<>();
+                set.add(list.get(5).getId());
+                set.add(list2.get(5).getId());
+                set.add(list3.get(5).getId());
+                set.add(list4.get(5).getId());
+                set.add(list5.get(5).getId());
 
-                Set<ImageView> set = new HashSet<>(tulemus);
                 if (set.size() == 1) { //kõik pildid on samad
-                    võit=  panus*5;
+                    võit = võit + panus*10;
                 } else if (set.size() == 2) { //kolmik ja paar või neli ühesugust pilti
-                    võit=  panus*3;
+                    võit = võit + panus*3;
                 } else if (set.size() == 3) { //kolm pilti on samad või kaks paari
-                    võit =  panus*2;
+                    võit = võit + panus*2;
                 } else { //ükski ei klapi
-                    võit = 0;
+                    võit = võit + 0;
                 }
 
                 Pane võit1 = võidusumma("Võidusumma");
@@ -527,6 +555,7 @@ public class SlotGUI  {
                     võit2.setLayoutY(125);
                     võit2.setLayoutX(475);
                     juur.getChildren().add(võit2);
+                    mängija.setRaha(mängija.getRaha() + võit);
 
                 });
 
@@ -772,6 +801,19 @@ public class SlotGUI  {
         pane.setOnMouseExited(event -> rect.setFill(Color.RED));
 
         return pane;
+    }
+
+    private boolean onSobivPanus(String sõne) {
+        boolean onPiisavPanus = true;
+        try {
+            panus = Integer.parseInt(sõne);
+            if (panus < 1) {
+                onPiisavPanus = false;
+            }
+        } catch (Exception e) {
+            onPiisavPanus = false;
+        }
+        return onPiisavPanus;
     }
 
 }
