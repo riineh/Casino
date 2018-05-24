@@ -97,11 +97,17 @@ public class SlotGUI  {
 
         //esimese sloti ikoonid
         ImageView slot = slot(slotid, stseen);
+        slot.setId("seitse");
         ImageView slot2 = slot(slotid2, stseen);
+        slot2.setId("kirsid");
         ImageView slot3 = slot(slotid3, stseen);
+        slot3.setId("banaan");
         ImageView slot4 = slot(slotid4, stseen);
+        slot4.setId("ploom");
         ImageView slot5 = slot(slotid5, stseen);
+        slot5.setId("bar");
         ImageView slot6 = slot(slotid6, stseen);
+        slot6.setId("sidrun");
         //esimese sloti ikoonide suurused
         slot.setFitWidth(125);
         slot.setFitHeight(125);
@@ -140,11 +146,17 @@ public class SlotGUI  {
 
         //teise sloti ikoonid
         ImageView slot7 = slot(slotid, stseen);
+        slot7.setId("seitse");
         ImageView slot8 = slot(slotid2, stseen);
+        slot8.setId("kirsid");
         ImageView slot9 = slot(slotid3, stseen);
+        slot9.setId("banaan");
         ImageView slot10 = slot(slotid4, stseen);
+        slot10.setId("ploom");
         ImageView slot11 = slot(slotid5, stseen);
+        slot11.setId("bar");
         ImageView slot12 = slot(slotid6, stseen);
+        slot12.setId("sidrun");
         //teise sloti ikoonide suurused
         slot7.setFitWidth(125);
         slot7.setFitHeight(125);
@@ -182,11 +194,17 @@ public class SlotGUI  {
 
         //kolmanda sloti ikoonid
         ImageView slot13 = slot(slotid, stseen);
+        slot13.setId("seitse");
         ImageView slot14 = slot(slotid2, stseen);
+        slot14.setId("kirsid");
         ImageView slot15 = slot(slotid3, stseen);
+        slot15.setId("banaan");
         ImageView slot16 = slot(slotid4, stseen);
+        slot16.setId("ploom");
         ImageView slot17 = slot(slotid5, stseen);
+        slot17.setId("bar");
         ImageView slot18 = slot(slotid6, stseen);
+        slot18.setId("sidrun");
         //kolmanda sloti ikoonide suurused
         slot13.setFitWidth(125);
         slot13.setFitHeight(125);
@@ -366,9 +384,6 @@ public class SlotGUI  {
         nimeTextField.getChildren().add(tf1);
         nimeTextField.setLayoutX(485);
         nimeTextField.setLayoutY(415);
-        try {
-            this.panus = Integer.parseInt(tf1.getText());
-        } catch (Exception e){}
 
 
         Pane playNupp = getVäikeNupp("Play");
@@ -389,6 +404,9 @@ public class SlotGUI  {
             juur.getChildren().addAll(iv3, ruut,slotruut1, slotruut2, slotruut3, startnupp, menuNupp, exitNupp);
 
             startnupp.setOnMouseClicked(event2 -> {
+                try {
+                    this.panus = Integer.parseInt(tf1.getText());
+                } catch (Exception e){}
                 juur.getChildren().clear();
                 juur.getChildren().addAll(iv3, ruut,slotruut1, slotruut2, slotruut3, startnupp, menuNupp, exitNupp);
                 juur.getChildren().addAll(slot, slot2, slot3, slot4, slot5, slot6,
@@ -397,19 +415,9 @@ public class SlotGUI  {
                 Collections.shuffle(list2);
                 Collections.shuffle(list3);
 
-                ArrayList<ImageView> tulemus1 = new ArrayList<>();
-                tulemus1.add(list.get(5));
-                tulemus1.add(list2.get(5));
-                tulemus1.add(list3.get(5));
 
-                Set<ImageView> set = new HashSet<>(tulemus1);
-                System.out.println(set.size());
-                if (set.size() == 1) { //kõik pildid on samad
-                    võit = panus*10;
-                } else if (set.size() == 2) { //kaks pilti on samad
-                    võit = panus*5;
-                } else { //ükski ei klapi
-                    võit = 0;
+                if (list.get(5).getId().equals(list2.get(5).getId())) {
+                    võit = võit + panus*3;
                 }
 
                 Pane võit1 = võidusumma("Võidusumma");

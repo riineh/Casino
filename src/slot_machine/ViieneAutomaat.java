@@ -34,5 +34,4 @@ public class ViieneAutomaat implements Loos {
             return 0;
         }
     }
-
 }
