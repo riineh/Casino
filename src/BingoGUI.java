@@ -29,7 +29,6 @@ public class BingoGUI {
     private String bingoLogoPath = "file:bingoTaust3.jpg";
     private String bingoLogo = "file:bingoKaart.jpg";
 
-    private Font megrim100 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),100);
     private Font megrim50 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),50);
     private Font megrim35 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),35);
     private Font megrim22 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),22);
@@ -192,7 +191,6 @@ public class BingoGUI {
                 juur.getChildren().removeAll(nurkademäng, jätka);
                 võit[0] = 0;
                 List<Pane> panes2 = loosiNumbrid(17, loos, loositudArvud, juur);
-                summa[0] = 0;
                 piletid.forEach(bingoPilet ->{
                     if (bingoPilet.diagonaalidemäng()){
                         võit[0] += 100;
