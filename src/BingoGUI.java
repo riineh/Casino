@@ -34,8 +34,8 @@ public class BingoGUI {
     private Font megrim35 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),35);
     private Font megrim22 = Font.loadFont(new FileInputStream(new File("Megrim.ttf")),22);
 
-    private Font litSans45 = Font.loadFont(new FileInputStream(new File("LitSans-Medium.otf")),45);
-    private Font litSans30 = Font.loadFont(new FileInputStream(new File("LitSans-Medium.otf")),30);
+    private Font litSans45 = Font.loadFont(new FileInputStream(new File("LitSansMedium.otf")),45);
+    private Font litSans30 = Font.loadFont(new FileInputStream(new File("LitSansMedium.otf")),30);
 
     private Color sinine = Color.rgb(41,79, 218);
     private Color punane = Color.rgb(255,38,5);
@@ -60,7 +60,7 @@ public class BingoGUI {
 
         //ring koos tuvtustustekstiga
         Pane infoRing = getTextCircle("\n\n" +
-                "1 mänguväli maksab 10€.\n\n" +
+                "1 mänguväli maksab 100€.\n\n" +
                 "Enne alustamist palun lugeda\nläbi mängureeglid.\n\n" +
                 "Head mänguõnne!\n\n", "Bingo\n\n\n\n\n\n", megrim35);
         infoRing.setLayoutX(stseen.getWidth()/2-(laius/4));
@@ -82,8 +82,8 @@ public class BingoGUI {
                 "1. esimeses osas tuleb täis saada nurgaruudud\n" +
                 "2. teises osas tuleb täis saada mõlemad diagonaalid\n" +
                 "3. kolmandas osas tuleb täis saada kõik ruudud.\n\n" +
-                "Nurkademängus loositakse 40 numbrit\n(võidusumma 20€).\n" +
-                "Diagonaalidemängus 17 numbrit (võidusumma 50€).\n" +
+                "Nurkademängus loositakse 40 numbrit\n(võidusumma 40€).\n" +
+                "Diagonaalidemängus 17 numbrit (võidusumma 100€).\n" +
                 "Täismängus 15 numbrit (võidusumma 150€).\n\n" +
                 "Võimalik on valida ühe- ja kahe-\nmänguväljaga pileti vahel.","Reeglid:\n\n\n\n\n\n\n", megrim22);
         reeglidRing.setLayoutX(stseen.getWidth()/2-(laius/4));
@@ -126,7 +126,7 @@ public class BingoGUI {
         final Pane[] bingoPilet0 = new Pane[1];
 
         ruut1.setOnMouseClicked(event -> {juur.getChildren().removeAll(ruut1, ruut2, tagasiNupp);
-            mängija.setRaha(mängija.getRaha()-10);
+            mängija.setRaha(mängija.getRaha()-100);
             BingoPilet p1 = null;
             try {
                 p1 = new BingoPilet();
@@ -142,7 +142,7 @@ public class BingoGUI {
         });
 
         ruut2.setOnMouseClicked(event -> {juur.getChildren().removeAll(ruut1, ruut2, tagasiNupp);
-            mängija.setRaha(mängija.getRaha()-20);
+            mängija.setRaha(mängija.getRaha()-200);
             BingoPilet p1 = null;
             BingoPilet p2 = null;
             try {

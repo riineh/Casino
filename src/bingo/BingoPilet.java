@@ -23,7 +23,7 @@ public class BingoPilet {
     private char[] tähed = {'B','I','N','G','O'};
     private List<List<Integer>> bingoTabel = new ArrayList<>();
 
-    private Font litSans22 = Font.loadFont(new FileInputStream(new File("LitSans-Medium.otf")),25);
+    private Font litSans22 = Font.loadFont(new FileInputStream(new File("LitSansMedium.otf")),25);
 
     private Color sinine = Color.rgb(41,79, 218);
     private Color punane = Color.rgb(255,38,5);
